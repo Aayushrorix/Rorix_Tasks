@@ -1,0 +1,71 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* Example: 3 columns with equal width */
+    gap: 10px;
+}
+
+.grid-item {
+    padding: 10px; /*Example: padding around grid items */
+    text-align: center; /* Example: center text */
+    display: flex;
+    padding: 0 24px;
+    height: 72px;
+    align-items: center;
+}
+
+.div-header-main{
+    white-space: nowrap;
+    /* display: flex; */
+    align-items: center;
+    /* margin-top: 25.5px; */
+}
+
+.right-icon{
+    /* height: 18px; */
+    font-size: 16px;
+    height: 13px;
+    width: 16px;
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%; */
+    /* transform: translate(-50%, -50%); */
+    /* display: flex; */
+}
+
+.div-icon{
+    /* margin-right: 8px; */
+    /* flex: none; */
+    background-color: #673ab7;
+    fill: #fff;
+    border-radius: 50%;
+    height: 24px;
+    width: 24px;
+    /* flex-shrink: 0; */
+    position: relative;
+    margin-right: 8px;
+    flex: none;
+}
+
+.div-title-detail{
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 50px;
+    vertical-align: middle;
+    color: #000000de;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+}
+
+.mat-stepper-horizontal-line{
+    border-top-width: 1px;
+    border-top-style: solid;
+    flex: auto;
+    height: 0;
+    margin: 0 -25px;
+    min-width: 32px;
+    border-top-color: #0000001f;
+    width: 100px;
+}

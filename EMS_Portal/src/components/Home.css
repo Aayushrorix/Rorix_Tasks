@@ -1,0 +1,181 @@
+.heading{
+    text-align: center;
+    margin-top: 1rem !important;
+    margin: 0 0 16px;
+    display: flex !important;
+    justify-content: center !important;
+}
+
+.span-heading{
+    margin: 0 0 16px;
+    font: 400 24px / 32px Roboto, Helvetica Neue, sans-serif;
+    letter-spacing: normal;
+    margin: 0 0 16px;
+}
+
+.div-btn-add-emp{
+    margin: 1rem !important;
+    display: flex !important;
+    justify-content: end !important;
+}
+
+.add-icon{
+    user-select: none;
+    fill: currentColor;
+    /* height: 24px; */
+    width: 24px;
+    height: 15px;
+    margin-right: 5px;
+    vertical-align: middle;
+    font-size: 24px;
+}
+
+.btn-add-employee{
+    float: right;
+    background-color: #673ab7;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    /* margin-right: 4px; */
+}
+
+.btn-add-employee:active{
+    float: right;
+    background-color: #673ab7;
+    color: white;
+    box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    /* margin-right: 4px; */
+}
+
+.div-emp-list-container{
+    margin: .5rem !important;
+    box-shadow: 0 7px 8px -4px #0003, 0 12px 17px 2px #00000024, 0 5px 22px 4px #0000001f;
+}
+
+table{
+    border-spacing: 0;
+    width: 100%;
+    background: #fff;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    caption-side: bottom;
+    border-collapse: collapse;
+    box-sizing: border-box;
+    display: table;
+    font: 400 14px / 20px Roboto, Helvetica Neue, sans-serif;
+    letter-spacing: normal;
+}
+
+thead{
+    background: inherit;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    display: table-header-group;
+    vertical-align: middle;
+    unicode-bidi: isolate;
+    border-spacing: 0;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    caption-side: bottom;
+    border-collapse: collapse;
+    text-indent: initial;
+    font: 400 14px / 20px Roboto, Helvetica Neue, sans-serif;
+    letter-spacing: normal;
+}
+
+tr.mat-header-row{
+    height: 56px;
+    background: inherit;
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
+    display: table-row;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+    border-spacing: 0;
+}
+
+.mat-header-cell {
+    color: #0000008a;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.mat-sort-header-container{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    letter-spacing: normal;
+    outline: 0;
+    justify-content: center;
+}
+
+th.mat-header-cell:first-of-type,td.mat-cell:first-of-type{
+    padding-left: 24px;
+}
+
+th.mat-header-cell{
+    padding: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+th.mat-header-cell:last-of-type,td.mat-cell:last-of-type{
+    padding-right: 24px;
+}
+
+th{
+    text-align: center !important;
+}
+
+
+td{
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+
+}
+
+tr.mat-row, tr.mat-footer-row {
+    height: 48px;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+    border-color: inherit;
+}
+
+td.mat-cell{
+    padding: 0;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: #0000001f;
+}
+
+td, th {
+    text-align: center !important;
+}
+
+.mat-cell, .mat-footer-cell {
+    color: #000000de;
+    font-size: 14px;
+}
+
+td{
+    border-color: inherit;
+    border-style: solid;
+    border-width: 0;
+    display: table-cell;
+    vertical-align: inherit;
+    unicode-bidi: isolate;
+}
