@@ -1,6 +1,6 @@
 import  { useState } from 'react';
 import './FormPage.css'; // Import CSS file for styling
-import PersonalDetail from './PersonalDetail';
+import PersonalDetails from './PersonalDetails';
 import BankDetails from './BankDetails';
 import ProfessionalDetails from './ProfessionalDetails';
 import EducationDetail from './EducationDetail';
@@ -8,16 +8,104 @@ import ExperienceDetail from './ExperienceDetail';
 import CurrentOrganizationDetail from './CurrentOrganizationDetail';
 import { useNavigate } from 'react-router-dom'
 
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+
 const FormPage = () => {
+    const formik = useFormik({
+        initialValues: {
+            id:'',
+      
+                firstName: "",
+                middleName: "",
+                lastName: "",
+                email: "",
+                mobileNumber: "",
+                dob: "",
+                presentAddress: "",
+                permanentAddress: "",
+                copyAddress: false,
+         
+            
+                bankName: "",
+                accountName: "",
+                accountNumber: "",
+                ifscCode: "",
+                aadhaarNumber: "",
+                panNumber: "",
+           
+          
+                designation: "",
+                department: "",
+                years: "",
+                months: "",
+                currentLocation: "",
+                skills: [
+                    ""
+                ],
+                resumeFile: {
+                    fileName: "",
+                    fileSrc: {}
+                },
+          
+            educationDetails: [
+                {
+                    educationName: "",
+                    universityName: "",
+                    result: "",
+                    yearOfPassing: ""
+                },
+                {
+                    educationName: "",
+                    universityName: "",
+                    result: "",
+                    yearOfPassing: ""
+                }
+            ],
+            experienceDetails: [
+                {
+                    companyName: "",
+                    position: "",
+                    totalYear: "",
+                    lastCTC: ""
+                },
+                {
+                    companyName: "",
+                    position: "",
+                    totalYear: "",
+                    lastCTC: ""
+                }
+            ],
+           
+                joiningDate: "",
+                appraisalDate: "",
+                currentCTC: "",
+          
+        },
+        validationSchema:Yup.object({
+        }) ,
+        onSubmit: (values, { resetForm }) => {
+            console.log("values -->",values)
+            // Reset the form after submission
+            resetForm();
+      
+            console.log("Form Submitted", values);
+      
+          }
+        
+    })
+
     const [currentPage, setCurrentPage] = useState<string>('personal');
     const [nextPage, setNextPage] = useState<string>('bank');
     const [previousPage, setPreviousPage] = useState<string>('');
 
     const nevigate = useNavigate()
 
-    const onSubmit = () => {
-        nevigate('/')
-    }
+    // const onSubmit = (values:any) => {
+    //     console.log("values -->",values)
+    //     // resetForm()
+    //     nevigate('/')
+    // }
 
     const changePage = (page: string) => {
         setCurrentPage(page);
@@ -71,8 +159,8 @@ const FormPage = () => {
 
     return (
         <div className="div-form-main">
-            <form>
-                {currentPage === 'personal' && <PersonalDetail />}
+            <form onSubmit={formik.handleSubmit}>
+                {currentPage === 'personal' && <PersonalDetails formik={formik}/>}
                 {currentPage === 'bank' && <BankDetails />}
                 {currentPage === 'professional' && <ProfessionalDetails />}
                 {currentPage === 'education' && <EducationDetail />}
@@ -99,7 +187,7 @@ const FormPage = () => {
                                 </button>
                             }
                             {currentPage === 'currentOrganization' && 
-                                <button type="button" onClick={() => onSubmit()} className='raised-button btn-primary'>
+                                <button type="submit" className='raised-button btn-primary'>
                                     Submit
                                 </button>
                             }

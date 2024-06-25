@@ -1,9 +1,9 @@
-interface Image{
+export interface Image{
     fileName: String;
     fileSrc: String;
 }
 
-interface PersonalDetail{
+export interface PersonalDetail{
     firstName: String;
     middleName: String;
     lastName: String;
@@ -16,7 +16,7 @@ interface PersonalDetail{
     copyAddress: Boolean;
 }
 
-interface BankDetails{
+export interface BankDetails{
     bankName: String;
     accountName: String;
     accountNumber: String;
@@ -26,12 +26,12 @@ interface BankDetails{
 }
 
 
-interface ResumeFile{
+export interface ResumeFile{
     fileName: String;
     fileSrc: Object;
 }
 
-interface ProfessionalDetail{
+export interface ProfessionalDetail{
     designation: String;
     department: String;
     years: String;
@@ -42,7 +42,7 @@ interface ProfessionalDetail{
 }
 
 
-interface EducationInfo {
+export interface EducationInfo {
     educationName: string;
     universityName: string;
     result: string;
@@ -51,7 +51,7 @@ interface EducationInfo {
 
 type EducationArray = EducationInfo[];
 
-interface ExperienceInfo {
+export interface ExperienceInfo {
     companyName: string;
     position: string;
     totalYear: string;
@@ -59,10 +59,10 @@ interface ExperienceInfo {
 }
 
 // Define the type for the array containing this object
-type ExperienceArray = ExperienceInfo[];
+export type ExperienceArray = ExperienceInfo[];
 
 
-interface CurrentOrganizationDetail{
+export interface CurrentOrganizationDetail{
     appraisalDate: Date;
     currentCTC: String;
     joiningDate: Date;
