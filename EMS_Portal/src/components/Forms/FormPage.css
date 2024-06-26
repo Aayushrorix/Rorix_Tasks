@@ -175,3 +175,18 @@ h2{
     background-color: #673ab7;
     color: #fff;
 }
+
+.form-field-subscript-wrapper{
+    padding: 0 1em;
+    position: absolute;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+    font-size: 75%;
+    margin-top: .6666666667em;
+    top: calc(100% - 1.7916666667em);
+}
+
+.error{
+    color: #f44336;
+}

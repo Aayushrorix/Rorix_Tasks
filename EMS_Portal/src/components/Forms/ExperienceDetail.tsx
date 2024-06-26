@@ -1,6 +1,6 @@
 // import React from 'react'
 
-function ExperienceDetail() {
+function ExperienceDetail({formik}:any) {
   return (
     <div>
             <h2 className="form-heading">Experience Detail</h2>

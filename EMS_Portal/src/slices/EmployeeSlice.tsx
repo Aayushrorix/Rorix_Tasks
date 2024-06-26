@@ -4,6 +4,7 @@ import { Employee } from "../models/EmployeeModel";
 export const employeeApi = createApi({
     baseQuery : fetchBaseQuery({
         baseUrl: 'http://127.0.0.1:8000/employees/',
+        // baseUrl: 'http://192.168.1.27:8181/employees/',
     }),
     tagTypes: ["Employee"],
     endpoints: (builder) => ({
@@ -11,9 +12,9 @@ export const employeeApi = createApi({
             query: () => '/get_employees',
             providesTags: ["Employee"],
         }),
-        addEmployee: builder.mutation<void, Employee>({
+        addEmployee: builder.mutation<any, any>({
             query: (employee) => ({
-                url: '',
+                url: '/add_employee',
                 method: 'POST',
                 body: employee,
             }),
