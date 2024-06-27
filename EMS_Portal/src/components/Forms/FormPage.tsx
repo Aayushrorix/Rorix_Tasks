@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import  { useEffect, useState } from 'react';
 import './FormPage.css';
 import PersonalDetails from './PersonalDetails';
 import BankDetails from './BankDetails';
@@ -6,89 +6,144 @@ import ProfessionalDetails from './ProfessionalDetails';
 import EducationDetail from './EducationDetail';
 import ExperienceDetail from './ExperienceDetail';
 import CurrentOrganizationDetail from './CurrentOrganizationDetail';
-import { useNavigate } from 'react-router-dom'
-import {  useAddEmployeeMutation } from '../../slices/EmployeeSlice';
+import { useNavigate, useParams } from 'react-router-dom'
+import {  useAddEmployeeMutation , useUpdateEmployeeMutation} from '../../slices/EmployeeSlice';
 // import { Employee } from '../../models/EmployeeModel';
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { v4 as uuidv4 } from 'uuid';
+import { RootState } from '../../store/store';
+import { useSelector } from 'react-redux';
+// import { Employee } from '../../models/EmployeeModel';
+// import { faL } from '@fortawesome/free-solid-svg-icons';
 // import { Employee } from '../../models/EmployeeModel';
 
 const FormPage = () => {
 
     const [addEmployee] = useAddEmployeeMutation()
+    const [updateEmployee] = useUpdateEmployeeMutation()
+    const [editMode, setEditMode] = useState(false)
 
-    const formik = useFormik({
-        initialValues: {
-            id:uuidv4(),
-            personalDetail: {
-                firstName: "",
-                middleName: "",
-                lastName: "",
-                email: "",
-                mobileNumber: "",
-                dob: "",
-                presentAddress: "",
-                permanentAddress: "",
-                copyAddress: false,
-            },
-            bankDetail: {
-                bankName: "",
-                accountName: "",
-                accountNumber: "",
-                ifscCode: "",
-                aadhaarNumber: "",
-                panNumber: "",
-            },
-            professionalDetail: {
-                designation: "",
-                department: "",
-                years: "",
-                months: "",
-                currentLocation: "",
-                skills: [
-                    ""
-                ],
-                resumeFile: {
-                    fileName: "TEMP-PDF-Document.pdf",
-                    fileSrc: {}
-                },
-            },
-            educationDetails: [
-                {
-                    educationName: "",
-                    universityName: "",
-                    result: "",
-                    yearOfPassing: ""
-                },
-                {
-                    educationName: "",
-                    universityName: "",
-                    result: "",
-                    yearOfPassing: ""
-                }
+    interface ApiResponse{
+        employees?: any[]
+    }
+    
+
+    interface QueryState {
+        data?:ApiResponse;
+        // other properties depending on your RTK Query setup
+      }
+
+    
+    const {id} = useParams();
+    const [empID, setEmpId] = useState(id?id:uuidv4())
+    const [initialValue, setInitialValue] = useState(
+        {
+        id:empID,
+        personalDetail: {
+            firstName: "",
+            middleName: "",
+            lastName: "",
+            email: "",
+            mobileNumber: "",
+            dob: "",
+            presentAddress: "",
+            permanentAddress: "",
+            copyAddress: false,
+        },
+        bankDetail: {
+            bankName: "",
+            accountName: "",
+            accountNumber: "",
+            ifscCode: "",
+            aadhaarNumber: "",
+            panNumber: "",
+        },
+        professionalDetail: {
+            designation: "",
+            department: "",
+            years: "",
+            months: "",
+            currentLocation: "",
+            skills: [
+                ""
             ],
-            experienceDetails: [
-                {
-                    companyName: "",
-                    position: "",
-                    totalYear: "",
-                    lastCTC: ""
-                },
-                {
-                    companyName: "",
-                    position: "",
-                    totalYear: "",
-                    lastCTC: ""
-                }
-            ],
-            currentOrganizationDetail:{
-                joiningDate: "",
-                appraisalDate: "",
-                currentCTC: "",
+            resumeFile: {
+                fileName: "TEMP-PDF-Document.pdf",
+                fileSrc: {}
             },
         },
+        educationDetails: [
+            {
+                educationName: "",
+                universityName: "",
+                result: "",
+                yearOfPassing: ""
+            },
+            {
+                educationName: "",
+                universityName: "",
+                result: "",
+                yearOfPassing: ""
+            }
+        ],
+        experienceDetails: [
+            {
+                companyName: "",
+                position: "",
+                totalYear: "",
+                lastCTC: ""
+            },
+            {
+                companyName: "",
+                position: "",
+                totalYear: "",
+                lastCTC: ""
+            }
+        ],
+        currentOrganizationDetail:{
+            joiningDate: "",
+            appraisalDate: "",
+            currentCTC: "",
+        }
+    })
+    useEffect(() => {
+        if (id) {
+            setEditMode(true); // Set editMode to true when id exists
+            // setEmpId(id)
+        } else {
+            setEditMode(false); // Set editMode to false when id does not exist
+            // setEmpId(uuidv4())
+        }
+    }, [id]);
+
+    // console.log("MODE ..........->",editMode)
+    // console.log("ID ..........->",empID)
+
+    const allEmployees = useSelector((state:RootState) => {
+        const queries = Object.values(state.api.queries) as QueryState[];
+        return queries.length > 0 && queries[0].data?.employees ? queries[0].data.employees : [];
+      });
+    
+    const currEmployee = allEmployees.find(emp => emp.id == id);
+    // console.log("Current EMP -> ",currEmployee)
+
+    // if(currEmployee){
+    //     setInitialValue(currEmployee)
+    // }
+
+    useEffect(() => {
+        if (currEmployee) {
+            setInitialValue(currEmployee)
+            formik.setValues(currEmployee);
+        }
+    }, [currEmployee]);
+
+    // console.log("Initial ----> ",initialValue)
+
+    const formik = useFormik({
+        initialValues: initialValue,
         validationSchema:Yup.object({
             personalDetail:Yup.object({
                 firstName: Yup.string()
@@ -148,13 +203,13 @@ const FormPage = () => {
             }),
         }) ,
         onSubmit: (values:any, { resetForm }) => {
-            console.log("values -->",values)
+            // console.log("values -->",values)
             // Reset the form after submission
             addEmployee(values)
             resetForm();
             nevigate('/')
       
-            console.log("Form Submitted", values);
+            // console.log("Form Submitted", values);
       
           }
         
@@ -273,6 +328,13 @@ const FormPage = () => {
         }
     };
 
+    function onEditSave(emp:any){
+        console.log(emp)
+        setEditMode(false)
+        updateEmployee(emp)
+        nevigate('/')
+    }
+
     return (
         <div className="div-form-main">
             <form onSubmit={formik.handleSubmit}>
@@ -302,9 +364,14 @@ const FormPage = () => {
                                     Next
                                 </button>
                             }
-                            {currentPage === 'currentOrganization' && 
+                            {currentPage === 'currentOrganization' && !editMode &&
                                 <button type="submit" className='raised-button btn-primary'>
                                     Submit
+                                </button>
+                            }
+                            {currentPage === 'currentOrganization' && editMode &&
+                                <button type="button" onClick={()=>onEditSave(formik.values)} className='raised-button btn-primary'>
+                                    Save
                                 </button>
                             }
                         </span>

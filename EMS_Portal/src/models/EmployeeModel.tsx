@@ -69,7 +69,7 @@ export interface CurrentOrganizationDetail{
 }
 
 export interface Employee{
-    id: Number;
+    id: string;
     personalDetail: PersonalDetail;
     bankDetail: BankDetails;
     currentOrganizationDetail: CurrentOrganizationDetail;

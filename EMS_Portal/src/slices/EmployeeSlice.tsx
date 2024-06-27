@@ -20,18 +20,18 @@ export const employeeApi = createApi({
             }),
             invalidatesTags: ["Employee"],
         }),
-        deleteEmployee: builder.mutation<void, number>({
-            query: (id) => ({
-                url: `/${id}`,
+        deleteEmployee: builder.mutation<void, string>({
+            query: (id:string) => ({
+                url: `/delete/${id}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ["Employee"],
         }),
-        updateEmployee: builder.mutation<void, Partial<Employee> & Pick<Employee, 'id'>>({
-            query: ({id,...rest}) => ({
-                url: `/${id}`,
+        updateEmployee: builder.mutation<any,any>({
+            query: (emp) => ({
+                url: `/update`,
                 method: 'PUT',
-                body: rest,
+                body: emp,
             }),
             invalidatesTags: ['Employee']
         }),

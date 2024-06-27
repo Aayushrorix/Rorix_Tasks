@@ -1,16 +1,18 @@
 // import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './Home.css'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { Employee } from '../models/EmployeeModel';
-import { useGetEmployeesQuery } from '../slices/EmployeeSlice';
+import { useGetEmployeesQuery, useDeleteEmployeeMutation } from '../slices/EmployeeSlice';
 // import { useEffect } from 'react';
 
 
 function Home() {
     const nevigate = useNavigate()
+
+    const [deleteEmployee] = useDeleteEmployeeMutation()
 
     type ApiResponse = {
         'employees': Employee[];
@@ -27,6 +29,14 @@ function Home() {
 
         return queries.length > 0 && queries[0].data ? queries[0].data.employees : [];
     });
+
+    function deleteRecord(id:string){
+        deleteEmployee(id)
+    }
+
+    // function editRecord(emp:any){
+    //     nevigate('/edit-employee')
+    // }
 
     console.log("All Employees -> ",allEmployees)
 
@@ -122,15 +132,19 @@ function Home() {
                         }
                         
                         {allEmployees.map((emp)=>(
-                            <tr key={String(emp.id)} className='mat-row'>
+                            <tr key={emp.id} className='mat-row'>
                                 <td className='mat-cell'>{emp.personalDetail.firstName}</td>
                                 <td className='mat-cell'>{emp.personalDetail.firstName}</td>
                                 <td className='mat-cell'>{emp.professionalDetail.department}</td>
                                 <td className='mat-cell'>{emp.professionalDetail.designation}</td>
                                 <td className='mat-cell'>{emp.personalDetail.email}</td>
                                 <td className='mat-cell'>{emp.personalDetail.mobileNumber}</td>
-                                <td className='mat-cell'>{String(emp.id)}</td>
-                                <td className='mat-cell'>{emp.personalDetail.firstName}</td>
+                                <td className='mat-cell'>{emp.id}</td>
+                                <td className='mat-cell'>
+                                    {/* <button type='button' onClick={() => editRecord(emp)}>Edit</button> */}
+                                    <Link to={`/edit-employee/${emp.id}`} ><button>Edit</button></Link>
+                                    <button type='button' onClick={()=>deleteRecord(emp.id)}>Delete</button>
+                                </td>
                             </tr>
                         ))}
                     </tbody>

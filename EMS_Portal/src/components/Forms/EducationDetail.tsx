@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+// import React, { useEffect } from 'react'
 import './FormPage.css'
 import './EducationDetail.css'
 import '../Home.css'
@@ -169,11 +169,8 @@ function add_education_form(){
 
 function EducationDetail({formik}:any) {
 
-
-  
-
   const [edu_form, setEdu_form] = useState<JSX.Element | null>(null);
-  const [educationDetails, setEducationDetails] = useState([])
+  // const [educationDetails, setEducationDetails] = useState([])
   // const [edu, setEdu] = useState<EducationInfo>(Object);
   // const [edu, setEdu] = useState<EducationInfo>({ educationName: '', universityName: '', yearOfPassing: '', result: '' });
 
@@ -241,7 +238,7 @@ function EducationDetail({formik}:any) {
                 <td className='mat-cell'>B</td>
               </tr>
 
-              {educationDetails &&
+              {/* {educationDetails &&
               educationDetails.map((edu:any,index:any) => (
                 <tr className='mat-row' key={index}>
                   <td className='mat-cell'>{edu.educationName}</td>
@@ -250,7 +247,7 @@ function EducationDetail({formik}:any) {
                   <td className='mat-cell'>{edu.yearOfPassing}</td>
                   <td className='mat-cell'>B</td>
                 </tr>
-              ))}
+              ))} */}
 
               {edu_form}
             </tbody>
