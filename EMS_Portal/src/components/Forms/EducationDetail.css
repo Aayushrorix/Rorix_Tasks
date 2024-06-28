@@ -191,3 +191,31 @@
 .form-field-hint-spacer{
     flex: 1 0 1em;
 }
+
+.btn-delete-edu{
+    float: right;
+    background-color: #dd0e4f;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin:2px;
+}
+
+.btn-delete-edu:disabled{
+    float: right;
+    background-color: #c2aeb4;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin:2px;
+}

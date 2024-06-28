@@ -207,3 +207,17 @@ td{
     border-radius: 4px;
     margin:2px;
 }
+
+.btn-edit-employee:disabled{
+    float: right;
+    background-color: #a6c8d7;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin:2px;
+}

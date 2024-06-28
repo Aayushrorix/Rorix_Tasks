@@ -236,8 +236,8 @@ function EducationDetail({formik}:any) {
                       <td className='mat-cell'>{edu.yearOfPassing}</td>
                       {/* <td className='mat-cell'></td> */}
                       <td className='mat-cell'>
-                        <button type='button' disabled={editMode} onClick={()=>form_record_edit(index)}>Edit</button>
-                        <button type='button' disabled={editMode} onClick={()=>delete_record(index)}>Delete</button>
+                        <button type='button' className='btn-edit-employee' disabled={editMode} onClick={()=>form_record_edit(index)}>Edit</button>
+                        <button type='button' className='btn-delete-edu' disabled={editMode} onClick={()=>delete_record(index)}>Delete</button>
                       </td>
                     </tr>
                   )

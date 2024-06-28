@@ -212,7 +212,7 @@ function ExperienceDetail({formik}:any) {
 
   return (
     <div>
-        <h2 className="form-heading">Education Details</h2>
+        <h2 className="form-heading">Experience Details</h2>
         
         <button disabled={editMode} onClick={()=> add_exp(form)}  type='button' className='btn-add-exp'>
           <span> Add Experience</span>
@@ -238,8 +238,8 @@ function ExperienceDetail({formik}:any) {
                       <td className='mat-cell'>{exp.lastCTC}</td>
                       {/* <td className='mat-cell'></td> */}
                       <td className='mat-cell'>
-                        <button type='button' disabled={editMode} onClick={()=>form_record_edit(index)}>Edit</button>
-                        <button type='button' disabled={editMode} onClick={()=>delete_record(index)}>Delete</button>
+                        <button type='button' className='btn-edit-employee' disabled={editMode} onClick={()=>form_record_edit(index)}>Edit</button>
+                        <button type='button' className='btn-delete-exp' disabled={editMode} onClick={()=>delete_record(index)}>Delete</button>
                       </td>
                     </tr>
                   )
