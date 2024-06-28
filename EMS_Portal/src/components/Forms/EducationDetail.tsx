@@ -1,41 +1,53 @@
-// import React, { useEffect } from 'react'
 import './FormPage.css'
 import './EducationDetail.css'
 import '../Home.css'
-import { useState } from 'react'
-import { EducationInfo } from '../../models/EmployeeModel'
+import { useEffect, useState } from 'react'
 
+function EducationDetail({formik}:any) {
 
-function add_education_form(){
+  const [edu_form, setEdu_form] = useState<JSX.Element | boolean>(false);
+  const [form_show, setForm_show] = useState(false)
+  const [index, setIndex] = useState(formik.values.educationDetails.length - 1)
 
-  const [edu, setEdu] = useState<EducationInfo>({ educationName: '', universityName: '', yearOfPassing: '', result: '' });
+  function form_sunmit(){
+    setForm_show(false)
+  }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // [e.target.name] = e.target.value
-    const { name, value } = e.target;
-    console.log('name -> ', name, ' value -> ', value);
-    setEdu(prevState => ({ ...prevState, [name]: value }));
-    console.log('Education -> ', edu);
-  };
+  function clear_form(){
+    const edu_details = formik.values.educationDetails
+    edu_details.pop()
+    const new_edu_details = edu_details
+    formik.setFieldValue('educationDetails', [
+      ...new_edu_details,
+      { educationName: '', universityName: '', result: '', yearOfPassing: '' },
+    ]);
+  }
 
-  const curr_index = 3
-  console.log(curr_index)
+  function remove_from_record(){
+    setForm_show(false)
+    const edu_details = formik.values.educationDetails
+    edu_details.pop()
+    const new_edu_details = edu_details
+    formik.setFieldValue('educationDetails', new_edu_details);
+  }
 
-  const form = (
+  const form = ( index!==-1 &&
     <tr className='mat-row'>
+
       <td className='mat-cell'>
         <div className='form-field'>
           <div className='form-field-flex'>
             <div className='form-field-infix'>
               <input
-                id='educationName'
-                name='educationName'
-                value={edu?.educationName || ''}
-                // name={`educationDetails.${curr_index}.educationName`}
-                // value={formik.values.educationDetails[curr_index]?.educationName || ''}
-                onChange={handleChange}
+                id={`educationName${index}`}
+                type='text'
+                name={`educationDetails[${index}].educationName`}
+                value={formik.values.educationDetails[index].educationName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 placeholder='Education Name'
                 className='input-element'
+                contentEditable = {true}
               />
               <span className='form-field-label-wrapper'>
                 <label htmlFor='educationName' className='form-field-label'>
@@ -61,12 +73,11 @@ function add_education_form(){
           <div className='form-field-flex'>
             <div className='form-field-infix'>
               <input
-                id='universityName'
-                name='universityName'
-                value={edu?.universityName || ''}
-                // name={`educationDetails.${curr_index}.universityName`}
-                // value={formik.values.educationDetails[curr_index]?.universityName || ''}
-                onChange={handleChange}
+                id= {`universityName${index}`}
+                name={`educationDetails[${index}].universityName`}
+                value={formik.values.educationDetails[index].universityName}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
                 placeholder='University Name'
                 className='input-element'
               />
@@ -94,12 +105,11 @@ function add_education_form(){
           <div className='form-field-flex'>
             <div className='form-field-infix'>
               <input
-                id='result'
-                name='result'
-                value={edu?.result || ''}
-                // name={`educationDetails.${curr_index}.result`}
-                // value={formik.values.educationDetails[curr_index]?.result || ''}
-                onChange={handleChange}
+                id={`result${index}`}
+                type='text'
+                name={`educationDetails[${index}].result`}
+                value={formik.values.educationDetails[index].result}
+                onChange={formik.handleChange}
                 placeholder='Result'
                 className='input-element'
               />
@@ -127,14 +137,12 @@ function add_education_form(){
           <div className='form-field-flex'>
             <div className='form-field-infix'>
               <input
-                id='yearOfPassing'
-                name='yearOfPassing'
-                value={edu?.yearOfPassing || ''}
-                // name={`educationDetails.${curr_index}.yearOfPassing`}
-                // value={formik.values.educationDetails[curr_index]?.yearOfPassing || ''}
-                onChange={handleChange}
-                placeholder='Year Of Passing'
+                id={`yearOfPassing${index}`}
                 type='number'
+                name={`educationDetails[${index}].yearOfPassing`}
+                value={formik.values.educationDetails[index].yearOfPassing}
+                onChange={formik.handleChange}
+                placeholder='Year Of Passing'
                 className='input-element'
               />
               <span className='form-field-label-wrapper'>
@@ -157,68 +165,50 @@ function add_education_form(){
       </td>
 
       <td className='mat-cell'>
-        <button type='button'>Submit</button>
-        <button type='button'>Clear</button>
-        {/* <button type='button' onClick={() => setEdu_form(null)}>Delete</button> */}
+        <button type='button' onClick={()=>form_sunmit()}>Submit</button>
+        <button type='button' onClick={()=>clear_form()}>Clear</button>
+        <button type='button' onClick={()=>remove_from_record()}>Delete</button>
       </td>
     </tr>
-  );
+  )
 
-  return form;
-}
+  useEffect(() => {
+    setEdu_form(form)
+  },[formik.values.educationDetails, form_show])
 
-function EducationDetail({formik}:any) {
+  function add_edu(form:any){
+    setIndex(formik.values.educationDetails.length)
+    setEdu_form(form)
+    setForm_show(true)
 
-  const [edu_form, setEdu_form] = useState<JSX.Element | null>(null);
-  // const [educationDetails, setEducationDetails] = useState([])
-  // const [edu, setEdu] = useState<EducationInfo>(Object);
-  // const [edu, setEdu] = useState<EducationInfo>({ educationName: '', universityName: '', yearOfPassing: '', result: '' });
+    formik.setFieldValue('educationDetails', [
+      ...formik.values.educationDetails,
+      { educationName: '', universityName: '', result: '', yearOfPassing: '' },
+    ]);
+  }
 
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   // [e.target.name] = e.target.value
-  //   console.log('name -> ', e.target.name, ' value -> ',e.target.value)
-  //   // console.log("====> ",e.target.name,"==>",e.target.value)
-  //   setEdu({...edu, [e.target.name]: e.target.value })
-  //   // setEdu({educationName:'sd',universityName:'sd',yearOfPassing:'2022',result:'sd'})
-  //   console.log("Education -> ",edu)
-  // };
+  function delete_record(index:number){
+    let old_eduDetails = JSON.parse(JSON.stringify(formik.values.educationDetails))
+    old_eduDetails.splice(index,1)
+    setForm_show(false)
+    setIndex(-1)
+    formik.setFieldValue('educationDetails', old_eduDetails);
+  }
 
-
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   console.log('name -> ', name, ' value -> ', value);
-  //   setEdu(prevState => ({ ...prevState, [name]: value }));
-  //   console.log('Education -> ', edu);
-  // };
-
-  // useEffect(() => {
-  //   console.log(edu)
-  // }, [edu]);
-
-
-  
-
-  // const edu_form = ""
-
-  // function add_education_btn(){
-    
-  // }
-
-  const form = add_education_form()
-  // function set_form(){
-  //   console.log(form)
-  //   setEdu_form(form);
-  // }
+  function form_record_edit(index:number){
+    // let old_eduDetails = JSON.parse(JSON.stringify(formik.values.educationDetails))
+    setIndex(index)
+    setForm_show(true)
+  }
 
   return (
     <div>
         <h2 className="form-heading">Education Details</h2>
         
-        <button onClick={()=> setEdu_form(form)}  type='button' className='btn-add-edu'>
+        <button onClick={()=> add_edu(form)}  type='button' className='btn-add-edu'>
           <span> Add Education</span>
         </button>
 
-        
           <table>
             <thead>
               <tr className='mat-header-row'>
@@ -230,29 +220,27 @@ function EducationDetail({formik}:any) {
               </tr>
             </thead>
             <tbody>
-              <tr className='mat-row'>
-                <td className='mat-cell'>B</td>
-                <td className='mat-cell'>B</td>
-                <td className='mat-cell'>B</td>
-                <td className='mat-cell'>B</td>
-                <td className='mat-cell'>B</td>
-              </tr>
+              {formik.values.educationDetails &&
+                formik.values.educationDetails.map((edu:any,index:any) => (
+                    <tr className='mat-row' key={index}>
+                      <td className='mat-cell'>{edu.educationName}</td>
+                      <td className='mat-cell'>{edu.universityName}</td>
+                      <td className='mat-cell'>{edu.result}</td>
+                      <td className='mat-cell'>{edu.yearOfPassing}</td>
+                      {/* <td className='mat-cell'></td> */}
+                      <td className='mat-cell'>
+                        <button type='button' onClick={()=>form_record_edit(index)}>Edit</button>
+                        <button type='button' onClick={()=>delete_record(index)}>Delete</button>
+                      </td>
+                    </tr>
+                  )
+                )
+              }
 
-              {/* {educationDetails &&
-              educationDetails.map((edu:any,index:any) => (
-                <tr className='mat-row' key={index}>
-                  <td className='mat-cell'>{edu.educationName}</td>
-                  <td className='mat-cell'>{edu.universityName}</td>
-                  <td className='mat-cell'>{edu.result}</td>
-                  <td className='mat-cell'>{edu.yearOfPassing}</td>
-                  <td className='mat-cell'>B</td>
-                </tr>
-              ))} */}
-
-              {edu_form}
+              {form_show && edu_form}
             </tbody>
           </table>
-        
+
     </div>
   )
 }

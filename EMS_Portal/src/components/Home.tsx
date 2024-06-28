@@ -142,8 +142,8 @@ function Home() {
                                 <td className='mat-cell'>{emp.id}</td>
                                 <td className='mat-cell'>
                                     {/* <button type='button' onClick={() => editRecord(emp)}>Edit</button> */}
-                                    <Link to={`/edit-employee/${emp.id}`} ><button>Edit</button></Link>
-                                    <button type='button' onClick={()=>deleteRecord(emp.id)}>Delete</button>
+                                    <Link to={`/edit-employee/${emp.id}`} ><button className='btn-edit-employee'>Edit</button></Link>
+                                    <button className='btn-delete-employee' type='button' onClick={()=>deleteRecord(emp.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}

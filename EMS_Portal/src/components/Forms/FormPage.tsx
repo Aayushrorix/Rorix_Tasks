@@ -37,7 +37,8 @@ const FormPage = () => {
 
     
     const {id} = useParams();
-    const [empID, setEmpId] = useState(id?id:uuidv4())
+    // const [empID, setEmpId] = useState(id?id:uuidv4())
+    const empID = id?id:uuidv4()
     const [initialValue, setInitialValue] = useState(
         {
         id:empID,
@@ -75,18 +76,18 @@ const FormPage = () => {
             },
         },
         educationDetails: [
-            {
-                educationName: "",
-                universityName: "",
-                result: "",
-                yearOfPassing: ""
-            },
-            {
-                educationName: "",
-                universityName: "",
-                result: "",
-                yearOfPassing: ""
-            }
+            // {
+            //     educationName: "aaa",
+            //     universityName: "",
+            //     result: "",
+            //     yearOfPassing: ""
+            // },
+            // {
+            //     educationName: "",
+            //     universityName: "",
+            //     result: "",
+            //     yearOfPassing: ""
+            // }
         ],
         experienceDetails: [
             {

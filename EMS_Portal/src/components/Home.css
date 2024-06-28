@@ -32,7 +32,7 @@
 
 .btn-add-employee{
     float: right;
-    background-color: #673ab7;
+    background-color: #6eb73a;
     color: white;
     box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
     cursor: pointer;
@@ -41,12 +41,12 @@
     font-size: 14px;
     font-weight: 500;
     border-radius: 4px;
-    /* margin-right: 4px; */
+    margin-right: 22px;
 }
 
 .btn-add-employee:active{
     float: right;
-    background-color: #673ab7;
+    background-color: #6eb73a;
     color: white;
     box-shadow: 0 5px 5px -3px #0003, 0 8px 10px 1px #00000024, 0 3px 14px 2px #0000001f;
     cursor: pointer;
@@ -56,7 +56,7 @@
 }
 
 .div-emp-list-container{
-    margin: .5rem !important;
+    margin: 2.5rem !important;
     box-shadow: 0 7px 8px -4px #0003, 0 12px 17px 2px #00000024, 0 5px 22px 4px #0000001f;
 }
 
@@ -178,4 +178,32 @@ td{
     display: table-cell;
     vertical-align: inherit;
     unicode-bidi: isolate;
+}
+
+.btn-delete-employee{
+    float: right;
+    background-color: #d32b4a;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin:2px;
+}
+
+.btn-edit-employee{
+    float: right;
+    background-color: #168dc4;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin:2px;
 }
