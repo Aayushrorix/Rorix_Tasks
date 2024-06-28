@@ -1,4 +1,4 @@
-.btn-add-edu{
+.btn-add-exp{
     padding-top: .25rem !important;
     padding-bottom: .25rem !important;
     padding-right: .5rem !important;
@@ -32,7 +32,7 @@
     transition: background 400ms cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.btn-add-edu:disabled{
+.btn-add-exp:disabled{
     padding-top: .25rem !important;
     padding-bottom: .25rem !important;
     padding-right: .5rem !important;

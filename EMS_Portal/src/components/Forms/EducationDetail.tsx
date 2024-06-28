@@ -8,8 +8,10 @@ function EducationDetail({formik}:any) {
   const [edu_form, setEdu_form] = useState<JSX.Element | boolean>(false);
   const [form_show, setForm_show] = useState(false)
   const [index, setIndex] = useState(formik.values.educationDetails.length - 1)
+  const [editMode, setEditMode] = useState(false)
 
   function form_sunmit(){
+    setEditMode(false)
     setForm_show(false)
   }
 
@@ -24,10 +26,12 @@ function EducationDetail({formik}:any) {
   }
 
   function remove_from_record(){
+    setEditMode(false)
     setForm_show(false)
     const edu_details = formik.values.educationDetails
     edu_details.pop()
     const new_edu_details = edu_details
+    setIndex(-1)
     formik.setFieldValue('educationDetails', new_edu_details);
   }
 
@@ -180,6 +184,7 @@ function EducationDetail({formik}:any) {
     setIndex(formik.values.educationDetails.length)
     setEdu_form(form)
     setForm_show(true)
+    setEditMode(true)
 
     formik.setFieldValue('educationDetails', [
       ...formik.values.educationDetails,
@@ -192,11 +197,13 @@ function EducationDetail({formik}:any) {
     old_eduDetails.splice(index,1)
     setForm_show(false)
     setIndex(-1)
+    setEditMode(false)
     formik.setFieldValue('educationDetails', old_eduDetails);
   }
 
   function form_record_edit(index:number){
     // let old_eduDetails = JSON.parse(JSON.stringify(formik.values.educationDetails))
+    setEditMode(true)
     setIndex(index)
     setForm_show(true)
   }
@@ -205,7 +212,7 @@ function EducationDetail({formik}:any) {
     <div>
         <h2 className="form-heading">Education Details</h2>
         
-        <button onClick={()=> add_edu(form)}  type='button' className='btn-add-edu'>
+        <button disabled={editMode} onClick={()=> add_edu(form)}  type='button' className='btn-add-edu'>
           <span> Add Education</span>
         </button>
 
@@ -229,8 +236,8 @@ function EducationDetail({formik}:any) {
                       <td className='mat-cell'>{edu.yearOfPassing}</td>
                       {/* <td className='mat-cell'></td> */}
                       <td className='mat-cell'>
-                        <button type='button' onClick={()=>form_record_edit(index)}>Edit</button>
-                        <button type='button' onClick={()=>delete_record(index)}>Delete</button>
+                        <button type='button' disabled={editMode} onClick={()=>form_record_edit(index)}>Edit</button>
+                        <button type='button' disabled={editMode} onClick={()=>delete_record(index)}>Delete</button>
                       </td>
                     </tr>
                   )

@@ -90,18 +90,18 @@ const FormPage = () => {
             // }
         ],
         experienceDetails: [
-            {
-                companyName: "",
-                position: "",
-                totalYear: "",
-                lastCTC: ""
-            },
-            {
-                companyName: "",
-                position: "",
-                totalYear: "",
-                lastCTC: ""
-            }
+            // {
+            //     companyName: "",
+            //     position: "",
+            //     totalYear: "",
+            //     lastCTC: ""
+            // },
+            // {
+            //     companyName: "",
+            //     position: "",
+            //     totalYear: "",
+            //     lastCTC: ""
+            // }
         ],
         currentOrganizationDetail:{
             joiningDate: "",
