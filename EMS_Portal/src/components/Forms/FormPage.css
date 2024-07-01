@@ -108,6 +108,7 @@ h2{
 }
 
 .form-field-underline{
+    height: 2px;
     content: "";
     display: block;
     position: absolute;

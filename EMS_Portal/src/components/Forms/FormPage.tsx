@@ -202,6 +202,28 @@ const FormPage = () => {
                 currentCTC: Yup.string()
                 .required("Current CTC is Required"),
             }),
+            // EducationDetail:Yup.object({
+            //     educationName: Yup.string()
+            //     .required("Education Name is Required"),
+            //     universityName: Yup.string()
+            //     .required("University Name is Required"),
+            //     result: Yup.string()
+            //     .required("Result Name is Required"),
+            //     yearOfPassing: Yup.string()
+            //     .required("year Of Passing Name is Required")
+            // })
+            educationDetails: Yup.array()
+            .of(Yup.object().shape({
+                    educationName: Yup.string()
+                    .required("Education Name is Required"),
+                    universityName: Yup.string()
+                    .required("University Name is Required"),
+                    result: Yup.string()
+                    .required("Result Name is Required"),
+                    yearOfPassing: Yup.string()
+                    .required("year Of Passing Name is Required")
+                })
+            )
         }) ,
         onSubmit: (values:any, { resetForm }) => {
             // console.log("values -->",values)
@@ -215,7 +237,6 @@ const FormPage = () => {
           }
         
     })
-
 
     const [currentPage, setCurrentPage] = useState<string>('personal');
     const [nextPage, setNextPage] = useState<string>('bank');
@@ -251,6 +272,13 @@ const FormPage = () => {
             formik.setFieldTouched('professionalDetail.skills', true);
         }else if(type==="next" && currentPage==="currentOrganization"){
             formik.setFieldTouched('currentOrganizationDetail.currentCTC', true);
+        }else if(type==="next" && currentPage==="education"){
+            formik.values.educationDetails.forEach((educationDetail:any, index:number) => {
+                formik.setFieldTouched(`educationDetails[${index}].educationName`, true);
+                formik.setFieldTouched(`educationDetails[${index}].universityName`, true);
+                formik.setFieldTouched(`educationDetails[${index}].result`, true);
+                formik.setFieldTouched(`educationDetails[${index}].yearOfPassing`, true);
+            });
         }
         
         if( (type==="next" && currentPage==="personal" &&formik.touched.personalDetail && !formik.errors.personalDetail) ||

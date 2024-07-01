@@ -6,6 +6,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { Employee } from '../models/EmployeeModel';
 import { useGetEmployeesQuery, useDeleteEmployeeMutation } from '../slices/EmployeeSlice';
+import { useEffect, useState } from 'react';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 // import { useEffect } from 'react';
 
 
@@ -13,6 +15,8 @@ function Home() {
     const nevigate = useNavigate()
 
     const [deleteEmployee] = useDeleteEmployeeMutation()
+
+    const [loading, setLoading] = useState(false)
 
     type ApiResponse = {
         'employees': Employee[];
@@ -23,6 +27,9 @@ function Home() {
     }
 
     const { data = [], isLoading, isFetching, isError } = useGetEmployeesQuery()
+    useEffect(()=>{
+        setLoading(isLoading)
+    },[isLoading])
 
     console.log("data -> ",data)
     console.log("isLoading -> ",isLoading)
@@ -34,7 +41,12 @@ function Home() {
     });
 
     function deleteRecord(id:string){
+        setTimeout(()=>{
+            setLoading(false)    
+        },500)
+        setLoading(true)
         deleteEmployee(id)
+        // setLoading(isLoading)
     }
 
     // function editRecord(emp:any){
@@ -107,17 +119,16 @@ function Home() {
 
                     <tbody>
 
-                        {isLoading && (<img className="img-loader" src="public\ripples.svg" alt="Loading..." />)}
+                        {loading && (<img className="img-loader" src="public\ripples.svg" alt="Loading..." />)}
 
-                        {!isLoading && Object.keys(allEmployees).length===0 && 
+                        {!loading && Object.keys(allEmployees).length===0 && 
                             <tr className='mat-row'>
                                 <td className='mat-cell' colSpan={8}>No Data</td>
                             </tr>
                         }
 
-                        
-                        
-                        {!isLoading && allEmployees.map((emp)=>(
+
+                        {!loading && allEmployees.map((emp)=>(
                             <tr key={emp.id} className='mat-row'>
                                 <td className='mat-cell'>{emp.personalDetail.firstName}</td>
                                 <td className='mat-cell'>{emp.personalDetail.firstName}</td>

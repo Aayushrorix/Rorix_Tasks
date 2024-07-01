@@ -157,7 +157,7 @@
     bottom: 1.34375em;
 }
 
-.form-field-ripple{
+.form-field-ripple:hover{
     bottom: 0;
     height: 2px;
     position: absolute;

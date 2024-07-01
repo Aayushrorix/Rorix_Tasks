@@ -69,3 +69,12 @@
     border-top-color: #0000001f;
     width: 100px;
 }
+
+.div-title-upper{
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 50px;
+    vertical-align: middle;
+}
