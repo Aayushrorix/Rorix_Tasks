@@ -89,6 +89,12 @@ function ExperienceDetail({formik}:any) {
               </tr>
             </thead>
             <tbody>
+              {formik.values.experienceDetails.length==0 && 
+                <tr className='mat-row'>
+                  <td colSpan={5} className='mat-cell'>No Records</td>
+                </tr>
+              }
+
               {formik.values.experienceDetails &&
                 formik.values.experienceDetails.map((exp:any,index:any) => (
                     <>

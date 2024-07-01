@@ -91,6 +91,12 @@ function EducationDetail({formik}:any) {
               </tr>
             </thead>
             <tbody>
+              {formik.values.educationDetails.length==0 && 
+              <tr className='mat-row'>
+                <td colSpan={5} className='mat-cell'>No Records</td>
+              </tr>
+              }
+
               {formik.values.educationDetails &&
                 formik.values.educationDetails.map((edu:any,index:any) => (
                   <>
