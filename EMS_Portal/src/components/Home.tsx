@@ -22,7 +22,10 @@ function Home() {
         data?: ApiResponse;
     }
 
-    useGetEmployeesQuery()
+    const { data = [], isLoading, isFetching, isError } = useGetEmployeesQuery()
+
+    console.log("data -> ",data)
+    console.log("isLoading -> ",isLoading)
 
     const allEmployees = useSelector((state:RootState) => {
         const queries = Object.values(state.api.queries) as QueryState[];
@@ -103,35 +106,18 @@ function Home() {
                     </thead>
 
                     <tbody>
-                        {/* <tr className='mat-row'>
-                            <td className='mat-cell'>Saaaa aaaaaaa</td>
-                            <td className='mat-cell'>Saaaa aaaaaaa</td>
-                            <td className='mat-cell'>Saaaa aaaaaaa</td>
-                            <td className='mat-cell'>Saaaa aaaaaaa</td>
-                            <td className='mat-cell'>Saaaa aaaaaaa</td>
-                            <td className='mat-cell'>Saaaa aaaaaaa</td>
-                            <td className='mat-cell'>Saaaa aaaaaaa</td>
-                            <td className='mat-cell'>Saaaa aaaaaaa</td>
-                        </tr>
 
-                        <tr className='mat-row'>
-                            <td className='mat-cell'>Saaaaaaaaaaa</td>
-                            <td className='mat-cell'>Saaaaaaaaaaa</td>
-                            <td className='mat-cell'>Saaaaaaaaaaa</td>
-                            <td className='mat-cell'>Saaaaaaaaaaa</td>
-                            <td className='mat-cell'>Saaaaaaaaaaa</td>
-                            <td className='mat-cell'>Saaaaaaaaaaa</td>
-                            <td className='mat-cell'>Saaaaaaaaaaa</td>
-                            <td className='mat-cell'>Saaaaaaaaaaa</td>
-                        </tr> */}
+                        {isLoading && (<img className="img-loader" src="public\ripples.svg" alt="Loading..." />)}
 
-                        {Object.keys(allEmployees).length===0 && 
+                        {!isLoading && Object.keys(allEmployees).length===0 && 
                             <tr className='mat-row'>
                                 <td className='mat-cell' colSpan={8}>No Data</td>
                             </tr>
                         }
+
                         
-                        {allEmployees.map((emp)=>(
+                        
+                        {!isLoading && allEmployees.map((emp)=>(
                             <tr key={emp.id} className='mat-row'>
                                 <td className='mat-cell'>{emp.personalDetail.firstName}</td>
                                 <td className='mat-cell'>{emp.personalDetail.firstName}</td>

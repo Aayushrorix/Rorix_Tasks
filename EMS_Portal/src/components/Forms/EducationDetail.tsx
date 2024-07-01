@@ -169,9 +169,9 @@ function EducationDetail({formik}:any) {
       </td>
 
       <td className='mat-cell'>
-        <button type='button' onClick={()=>form_sunmit()}>Submit</button>
-        <button type='button' onClick={()=>clear_form()}>Clear</button>
-        <button type='button' onClick={()=>remove_from_record()}>Delete</button>
+        <button type='button' className='btn-submit-edu' onClick={()=>form_sunmit()}>Submit</button>
+        <button type='button' className='btn-clear-edu' onClick={()=>clear_form()}>Clear</button>
+        <button type='button' className='btn-delete-edu' onClick={()=>remove_from_record()}>Delete</button>
       </td>
     </tr>
   )
@@ -212,10 +212,13 @@ function EducationDetail({formik}:any) {
     <div>
         <h2 className="form-heading">Education Details</h2>
         
-        <button disabled={editMode} onClick={()=> add_edu(form)}  type='button' className='btn-add-edu'>
-          <span> Add Education</span>
-        </button>
+        <div className='div-add-button'>
+          <button disabled={editMode} onClick={()=> add_edu(form)}  type='button' className='btn-add-edu'>
+            <span> Add Education</span>
+          </button>
+        </div>
 
+        <div>
           <table>
             <thead>
               <tr className='mat-header-row'>
@@ -236,7 +239,7 @@ function EducationDetail({formik}:any) {
                       <td className='mat-cell'>{edu.yearOfPassing}</td>
                       {/* <td className='mat-cell'></td> */}
                       <td className='mat-cell'>
-                        <button type='button' className='btn-edit-employee' disabled={editMode} onClick={()=>form_record_edit(index)}>Edit</button>
+                        <button type='button' className='btn-edit-edu' disabled={editMode} onClick={()=>form_record_edit(index)}>Edit</button>
                         <button type='button' className='btn-delete-edu' disabled={editMode} onClick={()=>delete_record(index)}>Delete</button>
                       </td>
                     </tr>
@@ -247,7 +250,7 @@ function EducationDetail({formik}:any) {
               {form_show && edu_form}
             </tbody>
           </table>
-
+        </div>
     </div>
   )
 }

@@ -4,7 +4,8 @@ import './FormPage.css'
 function ProfessionalDetails({formik}:any) {
   return (
     <div>
-            <h2 className="form-heading">Professional Details</h2>
+        <h2 className="form-heading">Professional Details</h2>
+        <div>
             <div className='div-field-main'>
                 <div className='div-field-second'>
                     <div className='div-field-third'>
@@ -172,6 +173,7 @@ function ProfessionalDetails({formik}:any) {
                     </div>
                 </div>
             </div>
+        </div>
     </div>
   )
 }

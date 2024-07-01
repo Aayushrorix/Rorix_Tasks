@@ -193,7 +193,7 @@
 }
 
 .btn-delete-edu{
-    float: right;
+    /* float: right; */
     background-color: #dd0e4f;
     color: white;
     box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
@@ -207,7 +207,7 @@
 }
 
 .btn-delete-edu:disabled{
-    float: right;
+    /* float: right; */
     background-color: #c2aeb4;
     color: white;
     box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
@@ -218,4 +218,65 @@
     font-weight: 500;
     border-radius: 4px;
     margin:2px;
+}
+
+.btn-edit-edu{
+    /* float: right; */
+    background-color: #1986a4;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin:2px;
+}
+
+.btn-edit-edu:disabled{
+    /* float: right; */
+    background-color: #c2aeb4;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin:2px;
+}
+
+.btn-clear-edu{
+    /* float: right; */
+    background-color: #3a6867;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin:2px;
+}
+
+.btn-submit-edu{
+    /* float: right; */
+    background-color: #1e59da;
+    color: white;
+    box-shadow: 0 3px 1px -2px #0003, 0 2px 2px #00000024, 0 1px 5px #0000001f;
+    cursor: pointer;
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin:2px;
+}
+
+.div-add-button{
+    content-visibility: auto;
+    margin-right: 30px;
 }

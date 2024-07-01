@@ -170,9 +170,9 @@ function ExperienceDetail({formik}:any) {
       </td>
 
       <td className='mat-cell'>
-        <button type='button' onClick={()=>form_sunmit()}>Submit</button>
-        <button type='button' onClick={()=>clear_form()}>Clear</button>
-        <button type='button' onClick={()=>remove_from_record()}>Delete</button>
+        <button type='button' className='btn-submit-exp' onClick={()=>form_sunmit()}>Submit</button>
+        <button type='button' className='btn-clear-exp' onClick={()=>clear_form()}>Clear</button>
+        <button type='button' className='btn-delete-exp' onClick={()=>remove_from_record()}>Delete</button>
       </td>
     </tr>
   )
@@ -213,11 +213,12 @@ function ExperienceDetail({formik}:any) {
   return (
     <div>
         <h2 className="form-heading">Experience Details</h2>
-        
-        <button disabled={editMode} onClick={()=> add_exp(form)}  type='button' className='btn-add-exp'>
-          <span> Add Experience</span>
-        </button>
-
+        <div className='div-add-button'>
+          <button disabled={editMode} onClick={()=> add_exp(form)}  type='button' className='btn-add-exp'>
+            <span> Add Experience</span>
+          </button>
+        </div>
+        <div>
           <table>
             <thead>
               <tr className='mat-header-row'>
@@ -238,7 +239,7 @@ function ExperienceDetail({formik}:any) {
                       <td className='mat-cell'>{exp.lastCTC}</td>
                       {/* <td className='mat-cell'></td> */}
                       <td className='mat-cell'>
-                        <button type='button' className='btn-edit-employee' disabled={editMode} onClick={()=>form_record_edit(index)}>Edit</button>
+                        <button type='button' className='btn-edit-eexp' disabled={editMode} onClick={()=>form_record_edit(index)}>Edit</button>
                         <button type='button' className='btn-delete-exp' disabled={editMode} onClick={()=>delete_record(index)}>Delete</button>
                       </td>
                     </tr>
@@ -249,6 +250,7 @@ function ExperienceDetail({formik}:any) {
               {form_show && exp_form}
             </tbody>
           </table>
+          </div>  
 
     </div>
   )

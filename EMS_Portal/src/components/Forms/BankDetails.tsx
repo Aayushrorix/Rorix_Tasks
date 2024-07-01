@@ -4,7 +4,10 @@
 function BankDetails({formik}:any) {
   return (
     <div>
-            <h2 className="form-heading">Bank Details</h2>
+        <h2 className="form-heading">Bank Details</h2>
+
+        <div>
+
             <div className='div-field-main'>
                 <div className='div-field-second'>
                     <div className='div-field-third'>
@@ -172,7 +175,7 @@ function BankDetails({formik}:any) {
                     </div>
                 </div>
             </div>
-
+        </div>
     </div>
   )
 }
