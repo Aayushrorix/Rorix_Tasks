@@ -277,7 +277,7 @@ function EducationDetail({formik}:any) {
                     </td>
 
                     <td className='mat-cell'>
-                      <button type='button' className='btn-submit-edu' onClick={()=>form_sunmit(index)}>Submit</button>
+                      <button type='button' className='btn-submit-edu' disabled={formik.errors.educationDetails && formik.errors.educationDetails[index]} onClick={()=>form_sunmit(index)}>Submit</button>
                       <button type='button' className='btn-clear-edu' onClick={()=>clear_form()}>Clear</button>
                       <button type='button' className='btn-delete-edu' onClick={()=>remove_from_record(index)}>Delete</button>
                     </td>
@@ -288,7 +288,7 @@ function EducationDetail({formik}:any) {
                   )
                 )
               }
-              
+
             </tbody>
           </table>
         </div>

@@ -132,6 +132,15 @@ function ExperienceDetail({formik}:any) {
                               <span className='form-field-ripple'></span>
                             </div>
                             <div className='form-field-subscript-wrapper'>
+                              <div>
+                                <div className='error'>
+                                  {formik.errors.experienceDetails && formik.errors.experienceDetails[index]?.companyName ? (
+                                      <div style={{color:"red"}}>{formik.errors.experienceDetails[index].companyName}</div>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='form-field-subscript-wrapper'>
                               <div className='form-field-hint-wrapper'>
                                 <div className='form-field-hint-spacer'></div>
                               </div>
@@ -162,6 +171,15 @@ function ExperienceDetail({formik}:any) {
                             </div>
                             <div className='form-field-underline'>
                               <span className='form-field-ripple'></span>
+                            </div>
+                            <div className='form-field-subscript-wrapper'>
+                              <div>
+                                <div className='error'>
+                                  {formik.errors.experienceDetails && formik.errors.experienceDetails[index]?.position ? (
+                                      <div style={{color:"red"}}>{formik.errors.experienceDetails[index].position}</div>
+                                  ) : null}
+                                </div>
+                              </div>
                             </div>
                             <div className='form-field-subscript-wrapper'>
                               <div className='form-field-hint-wrapper'>
@@ -196,6 +214,15 @@ function ExperienceDetail({formik}:any) {
                               <span className='form-field-ripple'></span>
                             </div>
                             <div className='form-field-subscript-wrapper'>
+                              <div>
+                                <div className='error'>
+                                  {formik.errors.experienceDetails && formik.errors.experienceDetails[index]?.totalYear ? (
+                                      <div style={{color:"red"}}>{formik.errors.experienceDetails[index].totalYear}</div>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='form-field-subscript-wrapper'>
                               <div className='form-field-hint-wrapper'>
                                 <div className='form-field-hint-spacer'></div>
                               </div>
@@ -228,6 +255,15 @@ function ExperienceDetail({formik}:any) {
                               <span className='form-field-ripple'></span>
                             </div>
                             <div className='form-field-subscript-wrapper'>
+                              <div>
+                                <div className='error'>
+                                  {formik.errors.experienceDetails && formik.errors.experienceDetails[index]?.lastCTC ? (
+                                      <div style={{color:"red"}}>{formik.errors.experienceDetails[index].lastCTC}</div>
+                                  ) : null}
+                                </div>
+                              </div>
+                            </div>
+                            <div className='form-field-subscript-wrapper'>
                               <div className='form-field-hint-wrapper'>
                                 <div className='form-field-hint-spacer'></div>
                               </div>
@@ -236,7 +272,7 @@ function ExperienceDetail({formik}:any) {
                         </td>
                   
                         <td className='mat-cell'>
-                          <button type='button' className='btn-submit-exp' onClick={()=>form_sunmit(index)}>Submit</button>
+                          <button type='button' className='btn-submit-exp' disabled={formik.errors.experienceDetails && formik.errors.experienceDetails[index]} onClick={()=>form_sunmit(index)}>Submit</button>
                           <button type='button' className='btn-clear-exp' onClick={()=>clear_form()}>Clear</button>
                           <button type='button' className='btn-delete-exp' onClick={()=>remove_from_record(index)}>Delete</button>
                         </td>

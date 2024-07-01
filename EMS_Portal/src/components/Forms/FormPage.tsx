@@ -223,7 +223,19 @@ const FormPage = () => {
                     yearOfPassing: Yup.string()
                     .required("year Of Passing Name is Required")
                 })
-            )
+            ),
+            experienceDetails: Yup.array()
+            .of(Yup.object().shape({
+                    companyName: Yup.string()
+                    .required("Company Name is Required"),
+                    position: Yup.string()
+                    .required("Position is Required"),
+                    totalYear: Yup.string()
+                    .required("Total Year is Required"),
+                    lastCTC: Yup.string()
+                    .required("Last CTC Name is Required")
+                })
+            ),
         }) ,
         onSubmit: (values:any, { resetForm }) => {
             // console.log("values -->",values)
@@ -279,14 +291,21 @@ const FormPage = () => {
                 formik.setFieldTouched(`educationDetails[${index}].result`, true);
                 formik.setFieldTouched(`educationDetails[${index}].yearOfPassing`, true);
             });
+        }else if(type==="next" && currentPage==="experience"){
+            formik.values.experienceDetails.forEach((experienceDetail:any, index:number) => {
+                formik.setFieldTouched(`experienceDetails[${index}].companyName`, true);
+                formik.setFieldTouched(`experienceDetails[${index}].position`, true);
+                formik.setFieldTouched(`experienceDetails[${index}].totalYear`, true);
+                formik.setFieldTouched(`experienceDetails[${index}].lastCTC`, true);
+            });
         }
         
         if( (type==="next" && currentPage==="personal" &&formik.touched.personalDetail && !formik.errors.personalDetail) ||
             (type==="next" && currentPage==="bank" &&formik.touched.bankDetail && !formik.errors.bankDetail) ||
             (type==="next" && currentPage==="professional" &&formik.touched.professionalDetail && !formik.errors.professionalDetail) ||
             (type==="next" && currentPage==="currentOrganization" &&formik.touched.currentOrganizationDetail && !formik.errors.currentOrganizationDetail) ||
-            (type==="next" && currentPage==="education") ||
-            (type==="next" && currentPage==="experience")
+            (type==="next" && currentPage==="education" &&formik.touched.educationDetails && !formik.errors.educationDetails && formik.values.educationDetails.length>0) ||
+            (type==="next" && currentPage==="experience" &&formik.touched.experienceDetails && !formik.errors.experienceDetails && formik.values.experienceDetails.length>0)
             ){
 
             setCurrentPage(page);
