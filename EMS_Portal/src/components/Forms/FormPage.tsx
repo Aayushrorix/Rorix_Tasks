@@ -15,6 +15,8 @@ import * as Yup from 'yup'
 import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
+import HeaderSteps from '../HeaderSteps';
+import { Employee } from '../../models/EmployeeModel';
 // import { Employee } from '../../models/EmployeeModel';
 // import { faL } from '@fortawesome/free-solid-svg-icons';
 // import { Employee } from '../../models/EmployeeModel';
@@ -24,6 +26,7 @@ const FormPage = () => {
     const [addEmployee] = useAddEmployeeMutation()
     const [updateEmployee] = useUpdateEmployeeMutation()
     const [editMode, setEditMode] = useState(false)
+    const [completeForm, setCompleteForm] = useState<string[]>([])
 
     interface ApiResponse{
         employees?: any[]
@@ -125,7 +128,7 @@ const FormPage = () => {
     const allEmployees = useSelector((state:RootState) => {
         const queries = Object.values(state.api.queries) as QueryState[];
         return queries.length > 0 && queries[0].data?.employees ? queries[0].data.employees : [];
-      });
+    });
     
     const currEmployee = allEmployees.find(emp => emp.id == id);
     // console.log("Current EMP -> ",currEmployee)
@@ -154,9 +157,11 @@ const FormPage = () => {
                 lastName: Yup.string()
                 .required("Last Name is Required"),
                 email: Yup.string()
+                .email("Please Enter Valid Email")
                 .required("Email is Required"),
                 mobileNumber: Yup.string()
-                .required("Mobile Number is Required"),
+                .required("Mobile Number is Required")
+                .length(10,"Moble Number Should be of 10 numbers"),
                 dob: Yup.string()
                 .required("Date Of Birth is Required"),
                 presentAddress: Yup.string()
@@ -174,6 +179,7 @@ const FormPage = () => {
                 ifscCode: Yup.string()
                 .required("IFSC Code is Required"),
                 aadhaarNumber: Yup.string()
+                .length(10,"Aadharcard Number should be of 12 digits")
                 .required("Aadhaar Number is Required"),
                 panNumber: Yup.string()
                 .required("PAN Number is Required"),
@@ -299,6 +305,8 @@ const FormPage = () => {
                 formik.setFieldTouched(`experienceDetails[${index}].lastCTC`, true);
             });
         }
+
+        
         
         if( (type==="next" && currentPage==="personal" &&formik.touched.personalDetail && !formik.errors.personalDetail) ||
             (type==="next" && currentPage==="bank" &&formik.touched.bankDetail && !formik.errors.bankDetail) ||
@@ -309,6 +317,8 @@ const FormPage = () => {
             ){
 
             setCurrentPage(page);
+            console.log("CURR PAGE => ",currentPage, page)
+            setCompleteForm([...completeForm,currentPage])
 
             // Update previousPage and nextPage based on currentPage
             switch (page) {
@@ -343,6 +353,7 @@ const FormPage = () => {
         else if(type==="back"){
 
             setCurrentPage(page);
+            console.log("CURR PAGE => ",currentPage, page)
 
             // Update previousPage and nextPage based on currentPage
             switch (page) {
@@ -384,6 +395,8 @@ const FormPage = () => {
     }
 
     return (
+        <>
+        <HeaderSteps completeForm={completeForm} currentPage={currentPage}/>
         <div className="div-form-main">
             <form onSubmit={formik.handleSubmit}>
                 {currentPage === 'personal' && <PersonalDetails formik={formik}/>}
@@ -427,6 +440,7 @@ const FormPage = () => {
                 </div>
             </form>
         </div>
+        </>
     );
 };
 

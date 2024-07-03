@@ -7,8 +7,8 @@ import { RootState } from '../store/store';
 import { Employee } from '../models/EmployeeModel';
 import { useGetEmployeesQuery, useDeleteEmployeeMutation } from '../slices/EmployeeSlice';
 import { useEffect, useState } from 'react';
-import { faL } from '@fortawesome/free-solid-svg-icons';
-import { number } from 'yup';
+// import { faL } from '@fortawesome/free-solid-svg-icons';
+// import { number } from 'yup';
 // import { useEffect } from 'react';
 
 
@@ -19,7 +19,11 @@ function Home() {
 
     const [loading, setLoading] = useState(false)
     const [empPages, setEmpPages] = useState<any>([])
-    const [currentPage, setCurrentPage] = useState(1); 
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const [currentSorting, setCurrentSorting] = useState({cp:'',current:'',arrow:'n'})
+
+    const [newEmpArray, setNewEmpArray] = useState<Employee[]>([])
 
     type ApiResponse = {
         'employees': Employee[];
@@ -29,7 +33,7 @@ function Home() {
         data?: ApiResponse;
     }
 
-    const { data = [], isLoading, isFetching, isError } = useGetEmployeesQuery()
+    const { data = [], isLoading } = useGetEmployeesQuery()
     useEffect(()=>{
         setLoading(isLoading)
     },[isLoading])
@@ -43,6 +47,12 @@ function Home() {
         return queries.length > 0 && queries[0].data ? queries[0].data.employees : [];
     });
 
+    useEffect(()=>{
+        setNewEmpArray(allEmployees)
+    },[allEmployees])
+
+    // const allEmployees = sortList(nallEmployees,currentSorting.cp,currentSorting.current)
+
     function chunkArray(arr:any, chunkSize:number) {
         var chunks = [];
         for (var i = 0; i < arr.length; i += chunkSize) {
@@ -52,8 +62,14 @@ function Home() {
     }
 
     useEffect(()=>{
-        setEmpPages(chunkArray(allEmployees,5))
-    },[allEmployees])
+        console.log(" =>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n",newEmpArray)
+    },[empPages])
+
+    useEffect(()=>{
+        console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n',newEmpArray)
+        const sArray = chunkArray(newEmpArray,5)
+        setEmpPages(sArray)
+    },[newEmpArray])
 
     console.log("-MMMMM> >>>>>>",empPages[0])
 
@@ -73,9 +89,62 @@ function Home() {
         console.log('Selected Page:', newPage);
     };
 
-    // function editRecord(emp:any){
-    //     nevigate('/edit-employee')
-    // }
+    function sortList(arr: any[], uemt: string | undefined = undefined, emt: string | undefined = undefined) {
+        // Make a copy of the array using slice()
+        const sortedArr = arr.slice();
+    
+        if (uemt && emt) {
+            sortedArr.sort((a: any, b: any) => {
+                let nameA = a[uemt][emt].toLowerCase();
+                let nameB = b[uemt][emt].toLowerCase();
+                if (nameA < nameB) {
+                    return -1;
+                }
+                if (nameA > nameB) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+    
+        console.log("Sorted Array ====> ", sortedArr);
+        return sortedArr;
+    }
+
+    useEffect(()=>{
+        console.log("New ---> currentSorting ===> ",currentSorting)
+        if(currentSorting.arrow==="n"){
+            setNewEmpArray(allEmployees)
+        }
+        else{
+            const nArray = sortList(newEmpArray,currentSorting.cp,currentSorting.current)
+            if(currentSorting.arrow==="u"){
+                setNewEmpArray(nArray)
+            }
+            else{
+                setNewEmpArray(nArray.reverse())
+            }
+        }
+    },[currentSorting])
+
+    function handleSorting(parentCurr:any,currBtn:any){
+        console.log("currBtn ===> ",currBtn)
+        console.log("currentSorting ===> ",currentSorting)
+        if(currentSorting.current===currBtn){
+            if(currentSorting.arrow==='n'){
+                setCurrentSorting({cp:parentCurr,current:currBtn,arrow:'u'})
+            }
+            else if(currentSorting.arrow==='u'){
+                setCurrentSorting({cp:parentCurr,current:currBtn,arrow:'l'})
+            }
+            else{
+                setCurrentSorting({cp:parentCurr,current:currBtn,arrow:'n'})
+            }
+        }
+        else{
+            setCurrentSorting({cp:parentCurr,current:currBtn,arrow:'u'})
+        }
+    }
 
     console.log("All Employees -> ",allEmployees)
 
@@ -103,39 +172,73 @@ function Home() {
                                     <div className='mat-sort-header-container'>Profile Picture</div>
                                 </div>
                             </th>
-                            <th className='mat-header-cell'>
+                            <th className='mat-header-cell'  id="name" onClick={() => handleSorting("personalDetail","firstName")}>
                                 <div>
-                                    <div className='mat-sort-header-container'>Name</div>
+                                    <div className='mat-sort-header-container'>
+                                        Name &nbsp;
+                                        <span className='arrow-hidden'>
+                                            <span>&#8595;</span>
+                                            <span>&#8593;</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </th>
-                            <th className='mat-header-cell'>
+                            <th className='mat-header-cell' id="department" onClick={() => handleSorting("professionalDetail","department")}>
                                 <div>
-                                    <div className='mat-sort-header-container'>Department</div>
+                                    <div className='mat-sort-header-container'>
+                                        Department &nbsp;
+                                        <span className='arrow-hidden'>
+                                            <span>&#8595;</span>
+                                            <span>&#8593;</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </th>
-                            <th className='mat-header-cell'>
+                            <th className='mat-header-cell' id="designation" onClick={() => handleSorting("professionalDetail","designation")}>
                                 <div>
-                                    <div className='mat-sort-header-container'>Designation</div>
+                                    <div className='mat-sort-header-container'>
+                                        Designation &nbsp;
+                                        <span className='arrow-hidden'>
+                                            <span>&#8595;</span>
+                                            <span>&#8593;</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </th>
-                            <th className='mat-header-cell'>
+                            <th className='mat-header-cell' id="email" onClick={() => handleSorting("personalDetail","email")}>
                                 <div>
-                                    <div className='mat-sort-header-container'>Email</div>
+                                    <div className='mat-sort-header-container'>
+                                        Email &nbsp;
+                                        <span className='arrow-hidden'>
+                                            <span>&#8595;</span>
+                                            <span>&#8593;</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </th>
-                            <th className='mat-header-cell'>
+                            <th className='mat-header-cell' id="mobileNumber" onClick={() => handleSorting("personalDetail","mobileNumber")}>
                                 <div>
-                                    <div className='mat-sort-header-container'>Mobile Number</div>
+                                    <div className='mat-sort-header-container'>
+                                        Mobile Number &nbsp;
+                                        <span className='arrow-hidden'>
+                                            <span>&#8595;</span>
+                                            <span>&#8593;</span>
+                                        </span>
+                                    </div>
                                 </div>
                             </th>
-                            <th className='mat-header-cell'>
+                            <th className='mat-header-cell' id="resume">
                                 <div>
-                                    <div className='mat-sort-header-container'>Resume</div>
+                                    <div className='mat-sort-header-container'>
+                                        Resume
+                                    </div>
                                 </div>
                             </th>
-                            <th className='mat-header-cell'>
+                            <th className='mat-header-cell' id="action">
                                 <div>
-                                    <div className='mat-sort-header-container'>Action</div>
+                                    <div className='mat-sort-header-container'>
+                                        Action
+                                    </div>
                                 </div>
                             </th>
                         </tr>
@@ -170,7 +273,7 @@ function Home() {
                         ))}
                         
                         <tr className='mat-row'>
-                            <td className='mat-cell' colSpan={8}>Page : 
+                            <td className='mat-cell' colSpan={8}>Page &nbsp;
                                 <select name="page" id="page" onChange={handlePageChange} value={currentPage}>
                                     {Object.keys(empPages).map((k)=>(
                                         <option key={k}  value={Number(k)+1}>{Number(k)+1}</option>

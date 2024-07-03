@@ -225,3 +225,43 @@ td{
 .img-loader{
     margin-left: 500px;
 }
+
+#name .arrow-hidden{
+    display: none;
+}
+
+#name:hover .arrow-hidden {
+    display: inline-block; /* Show the hidden content when .trigger is hovered */
+}
+
+#department .arrow-hidden{
+    display: none;
+}
+
+#department:hover .arrow-hidden {
+    display: inline-block; /* Show the hidden content when .trigger is hovered */
+}
+
+#designation .arrow-hidden{
+    display: none;
+}
+
+#designation:hover .arrow-hidden {
+    display: inline-block; /* Show the hidden content when .trigger is hovered */
+}
+
+#email .arrow-hidden{
+    display: none;
+}
+
+#email:hover .arrow-hidden {
+    display: inline-block; /* Show the hidden content when .trigger is hovered */
+}
+
+#mobileNumber .arrow-hidden{
+    display: none;
+}
+
+#mobileNumber:hover .arrow-hidden {
+    display: inline-block; /* Show the hidden content when .trigger is hovered */
+}
