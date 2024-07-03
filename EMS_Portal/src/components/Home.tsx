@@ -8,6 +8,7 @@ import { Employee } from '../models/EmployeeModel';
 import { useGetEmployeesQuery, useDeleteEmployeeMutation } from '../slices/EmployeeSlice';
 import { useEffect, useState } from 'react';
 import { faL } from '@fortawesome/free-solid-svg-icons';
+import { number } from 'yup';
 // import { useEffect } from 'react';
 
 
@@ -17,6 +18,8 @@ function Home() {
     const [deleteEmployee] = useDeleteEmployeeMutation()
 
     const [loading, setLoading] = useState(false)
+    const [empPages, setEmpPages] = useState<any>([])
+    const [currentPage, setCurrentPage] = useState(1); 
 
     type ApiResponse = {
         'employees': Employee[];
@@ -40,14 +43,35 @@ function Home() {
         return queries.length > 0 && queries[0].data ? queries[0].data.employees : [];
     });
 
+    function chunkArray(arr:any, chunkSize:number) {
+        var chunks = [];
+        for (var i = 0; i < arr.length; i += chunkSize) {
+            chunks.push(arr.slice(i, i + chunkSize));
+        }
+        return chunks;
+    }
+
+    useEffect(()=>{
+        setEmpPages(chunkArray(allEmployees,5))
+    },[allEmployees])
+
+    console.log("-MMMMM> >>>>>>",empPages[0])
+
     function deleteRecord(id:string){
         setTimeout(()=>{
             setLoading(false)    
         },500)
         setLoading(true)
         deleteEmployee(id)
-        // setLoading(isLoading)
+        setCurrentPage(1)
     }
+
+    const handlePageChange = (event:any) => {
+        const newPage = parseInt(event.target.value);
+        setCurrentPage(newPage);
+        // Perform any action you need when page changes, e.g., fetching data.
+        console.log('Selected Page:', newPage);
+    };
 
     // function editRecord(emp:any){
     //     nevigate('/edit-employee')
@@ -128,7 +152,7 @@ function Home() {
                         }
 
 
-                        {!loading && allEmployees.map((emp)=>(
+                        {!loading && empPages[currentPage-1] && empPages[currentPage-1].map((emp:Employee)=>(
                             <tr key={emp.id} className='mat-row'>
                                 <td className='mat-cell'>{emp.personalDetail.firstName}</td>
                                 <td className='mat-cell'>{emp.personalDetail.firstName}</td>
@@ -144,6 +168,16 @@ function Home() {
                                 </td>
                             </tr>
                         ))}
+                        
+                        <tr className='mat-row'>
+                            <td className='mat-cell' colSpan={8}>Page : 
+                                <select name="page" id="page" onChange={handlePageChange} value={currentPage}>
+                                    {Object.keys(empPages).map((k)=>(
+                                        <option key={k}  value={Number(k)+1}>{Number(k)+1}</option>
+                                    ))}
+                                </select>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
