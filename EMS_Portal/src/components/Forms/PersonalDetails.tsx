@@ -12,6 +12,8 @@ function PersonalDetails({formik}:any) {
     //     setPersonalDetail({...personalDetail, [e.target.name]: e.target.value })
     //     console.log("personalDetail -> ",personalDetail)
     // };
+
+    console.log("\n\n\n DDDDD ==> ",formik.values.personalDetail.dob)
   return (
     <div>
         <h2 className="form-heading" >Personal Details</h2>
@@ -188,29 +190,59 @@ function PersonalDetails({formik}:any) {
                     </div>
                 </div>
             </div>
-
-            <div className='div-field-main'>
-                <div className='div-field-second'>
-                    <div className='div-field-third'>
-                        <div className='div-field'>
-                            <input type='text' className='input-field' name='personalDetail.presentAddress' value={formik.values.personalDetail.presentAddress} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
-                            <span className='field-label-wrapper'>
-                                <label className='form-field-label'>
-                                    <span>Present Address</span>
-                                    <span>*</span>
-                                </label>
-                            </span>
+            
+            <div>
+                <div className='div-field-main'>
+                    <div className='div-field-second'>
+                        <div className='div-field-third'>
+                            <div className='div-field'>
+                                <input type='text' className='input-field' name='personalDetail.presentAddress' value={formik.values.personalDetail.presentAddress} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+                                <span className='field-label-wrapper'>
+                                    <label className='form-field-label'>
+                                        <span>Present Address</span>
+                                        <span>*</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div className='form-field-underline'>
+                            <span className='form-field-ripple'></span>
+                        </div>
+                        <div className='form-field-subscript-wrapper'>
+                            <div>
+                                <div className='error'>
+                                    {formik.touched.personalDetail?.presentAddress && formik.errors.personalDetail?.presentAddress ? (
+                                        <div style={{color:"red"}}>{formik.errors.personalDetail.presentAddress}</div>
+                                    ) : null}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className='form-field-underline'>
-                        <span className='form-field-ripple'></span>
-                    </div>
-                    <div className='form-field-subscript-wrapper'>
-                        <div>
-                            <div className='error'>
-                                {formik.touched.personalDetail?.presentAddress && formik.errors.personalDetail?.presentAddress ? (
-                                    <div style={{color:"red"}}>{formik.errors.personalDetail.presentAddress}</div>
-                                ) : null}
+                </div>
+
+                <div className='div-field-main'>
+                    <div className='div-field-second'>
+                        <div className='div-field-third'>
+                            <div className='div-field'>
+                                <input type='text' className='input-field' name='personalDetail.permanentAddress' value={formik.values.personalDetail.copyAddress?formik.values.personalDetail.presentAddress:formik.values.personalDetail.permanentAddress} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+                                <span className='field-label-wrapper'>
+                                    <label className='form-field-label'>
+                                        <span>Permanent Address</span>
+                                        <span>*</span>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div className='form-field-underline'>
+                            <span className='form-field-ripple'></span>
+                        </div>
+                        <div className='form-field-subscript-wrapper'>
+                            <div>
+                                <div className='error'>
+                                    {formik.touched.personalDetail?.permanentAddress && formik.errors.personalDetail?.permanentAddress ? (
+                                        <div style={{color:"red"}}>{formik.errors.personalDetail.permanentAddress}</div>
+                                    ) : null}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -221,29 +253,18 @@ function PersonalDetails({formik}:any) {
                 <div className='div-field-second'>
                     <div className='div-field-third'>
                         <div className='div-field'>
-                            <input type='text' className='input-field' name='personalDetail.permanentAddress' value={formik.values.personalDetail.permanentAddress} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
+                            <input type='checkbox' className='input-field' name='personalDetail.copyAddress' value={formik.values.personalDetail.copyAddress} onChange={formik.handleChange}/>
                             <span className='field-label-wrapper'>
-                                <label className='form-field-label'>
-                                    <span>Permanent Address</span>
-                                    <span>*</span>
+                                <label>
+                                    <span>Copy to Permanent Address</span>
+                                    {/* <span>*</span> */}
                                 </label>
                             </span>
                         </div>
                     </div>
-                    <div className='form-field-underline'>
-                        <span className='form-field-ripple'></span>
-                    </div>
-                    <div className='form-field-subscript-wrapper'>
-                        <div>
-                            <div className='error'>
-                                {formik.touched.personalDetail?.permanentAddress && formik.errors.personalDetail?.permanentAddress ? (
-                                    <div style={{color:"red"}}>{formik.errors.personalDetail.permanentAddress}</div>
-                                ) : null}
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
+
         </div>
 
     </div>

@@ -70,9 +70,7 @@ const FormPage = () => {
             years: "",
             months: "",
             currentLocation: "",
-            skills: [
-                ""
-            ],
+            skills: "",
             resumeFile: {
                 fileName: "TEMP-PDF-Document.pdf",
                 fileSrc: {}
@@ -175,8 +173,11 @@ const FormPage = () => {
                 accountName: Yup.string()
                 .required("Account Name is Required"),
                 accountNumber: Yup.string()
+                .min(9, "Bank Account Number must be of 9-18 digits.")
+                .max(18, "Bank Account Number must be of 9-18 digits.")
                 .required("Account Number is Required"),
                 ifscCode: Yup.string()
+                .matches(/^([A-Za-z]{4})(0{1})(\d{6})$/, 'IFSC Code must be of format AAAA0111111.')
                 .required("IFSC Code is Required"),
                 aadhaarNumber: Yup.string()
                 .length(12,"Aadharcard Number should be of 12 digits")
@@ -201,10 +202,10 @@ const FormPage = () => {
                 // .required("Resume File is Required"),
             }),
             currentOrganizationDetail:Yup.object({
-                // joiningDate: Yup.string()
-                // .required("Joining Date is Required"),
-                // appraisalDate: Yup.string()
-                // .required("Appraisal Date is Required"),
+                joiningDate: Yup.string()
+                .required("Joining Date is Required"),
+                appraisalDate: Yup.string()
+                .required("Appraisal Date is Required"),
                 currentCTC: Yup.string()
                 .required("Current CTC is Required"),
             }),
@@ -390,10 +391,15 @@ const FormPage = () => {
     };
 
     function onEditSave(emp:any){
-        console.log(emp)
-        setEditMode(false)
-        updateEmployee(emp)
-        nevigate('/')
+        formik.setFieldTouched('currentOrganizationDetail.joiningDate', true);
+        formik.setFieldTouched('currentOrganizationDetail.appraisalDate', true);
+        formik.setFieldTouched('currentOrganizationDetail.currentCTC', true);
+        if(!formik.errors.currentOrganizationDetail){
+            console.log(emp)
+            setEditMode(false)
+            updateEmployee(emp)
+            nevigate('/')
+        }
     }
 
     return (

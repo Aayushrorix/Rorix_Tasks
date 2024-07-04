@@ -7,7 +7,7 @@ import { RootState } from '../store/store';
 import { Employee } from '../models/EmployeeModel';
 import { useGetEmployeesQuery, useDeleteEmployeeMutation } from '../slices/EmployeeSlice';
 import { useEffect, useState } from 'react';
-import { number } from 'yup';
+// import { number } from 'yup';
 // import { faL } from '@fortawesome/free-solid-svg-icons';
 // import { number } from 'yup';
 // import { useEffect } from 'react';
