@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 function ExperienceDetail({formik}:any) {
 
-  const [index, setIndex] = useState(formik.values.experienceDetails.length - 1)
+  // const [index, setIndex] = useState(formik.values.experienceDetails.length - 1)
   const [editMode, setEditMode] = useState(false)
   const [editIds, setEditIds] = useState<Array<number>>([])
 
@@ -38,13 +38,13 @@ function ExperienceDetail({formik}:any) {
     setEditMode(false)
     const exp_details = formik.values.experienceDetails
     exp_details.pop()
-    setIndex(-1)
+    // setIndex(-1)
     const new_exp_details = exp_details
     formik.setFieldValue('experienceDetails', new_exp_details);
   }
 
   function add_exp(){
-    setIndex(formik.values.experienceDetails.length)
+    // setIndex(formik.values.experienceDetails.length)
     setEditIds([...editIds,formik.values.experienceDetails.length])
     setEditMode(true)
 
@@ -57,7 +57,7 @@ function ExperienceDetail({formik}:any) {
   function delete_record(index:number){
     let old_expDetails = JSON.parse(JSON.stringify(formik.values.experienceDetails))
     old_expDetails.splice(index,1)
-    setIndex(-1)
+    // setIndex(-1)
     setEditMode(false)
     formik.setFieldValue('experienceDetails', old_expDetails);
   }
@@ -65,7 +65,7 @@ function ExperienceDetail({formik}:any) {
   function form_record_edit(index:number){
     setEditIds([...editIds,index])
     setEditMode(true)
-    setIndex(index)
+    // setIndex(index)
   }
 
 

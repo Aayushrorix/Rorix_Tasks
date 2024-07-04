@@ -7,6 +7,7 @@ import { RootState } from '../store/store';
 import { Employee } from '../models/EmployeeModel';
 import { useGetEmployeesQuery, useDeleteEmployeeMutation } from '../slices/EmployeeSlice';
 import { useEffect, useState } from 'react';
+import { number } from 'yup';
 // import { faL } from '@fortawesome/free-solid-svg-icons';
 // import { number } from 'yup';
 // import { useEffect } from 'react';
@@ -33,13 +34,13 @@ function Home() {
         data?: ApiResponse;
     }
 
-    const { data = [], isLoading } = useGetEmployeesQuery()
+    const {isLoading } = useGetEmployeesQuery()
     useEffect(()=>{
         setLoading(isLoading)
     },[isLoading])
 
-    console.log("data -> ",data)
-    console.log("isLoading -> ",isLoading)
+    // console.log("data -> ",data)
+    // console.log("isLoading -> ",isLoading)
 
     const allEmployees = useSelector((state:RootState) => {
         const queries = Object.values(state.api.queries) as QueryState[];
@@ -61,17 +62,17 @@ function Home() {
         return chunks;
     }
 
-    useEffect(()=>{
-        console.log(" =>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n",newEmpArray)
-    },[empPages])
+    // useEffect(()=>{
+    //     console.log(" =>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n",newEmpArray)
+    // },[empPages])
 
     useEffect(()=>{
-        console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n',newEmpArray)
+        // console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n',newEmpArray)
         const sArray = chunkArray(newEmpArray,5)
         setEmpPages(sArray)
     },[newEmpArray])
 
-    console.log("-MMMMM> >>>>>>",empPages[0])
+    // console.log("-MMMMM> >>>>>>",empPages[0])
 
     function deleteRecord(id:string){
         setTimeout(()=>{
@@ -80,13 +81,14 @@ function Home() {
         setLoading(true)
         deleteEmployee(id)
         setCurrentPage(1)
+        setCurrentSorting({cp:'',current:'',arrow:'n'})
     }
 
     const handlePageChange = (event:any) => {
         const newPage = parseInt(event.target.value);
         setCurrentPage(newPage);
         // Perform any action you need when page changes, e.g., fetching data.
-        console.log('Selected Page:', newPage);
+        // console.log('Selected Page:', newPage);
     };
 
     function sortList(arr: any[], uemt: string | undefined = undefined, emt: string | undefined = undefined) {
@@ -97,22 +99,32 @@ function Home() {
             sortedArr.sort((a: any, b: any) => {
                 let nameA = a[uemt][emt].toLowerCase();
                 let nameB = b[uemt][emt].toLowerCase();
-                if (nameA < nameB) {
-                    return -1;
+                if(emt!=="mobileNumber"){
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
                 }
-                if (nameA > nameB) {
-                    return 1;
+                else{
+                    if (Number(nameA) < Number(nameB)) {
+                        return -1;
+                    }
+                    if (Number(nameA) > Number(nameB)) {
+                        return 1;
+                    }
                 }
                 return 0;
             });
         }
     
-        console.log("Sorted Array ====> ", sortedArr);
+        // console.log("Sorted Array ====> ", sortedArr);
         return sortedArr;
     }
 
     useEffect(()=>{
-        console.log("New ---> currentSorting ===> ",currentSorting)
+        // console.log("New ---> currentSorting ===> ",currentSorting)
         if(currentSorting.arrow==="n"){
             setNewEmpArray(allEmployees)
         }
@@ -128,8 +140,8 @@ function Home() {
     },[currentSorting])
 
     function handleSorting(parentCurr:any,currBtn:any){
-        console.log("currBtn ===> ",currBtn)
-        console.log("currentSorting ===> ",currentSorting)
+        // console.log("currBtn ===> ",currBtn)
+        // console.log("currentSorting ===> ",currentSorting)
         if(currentSorting.current===currBtn){
             if(currentSorting.arrow==='n'){
                 setCurrentSorting({cp:parentCurr,current:currBtn,arrow:'u'})
@@ -146,7 +158,7 @@ function Home() {
         }
     }
 
-    console.log("All Employees -> ",allEmployees)
+    // console.log("All Employees -> ",allEmployees)
 
     return (
         <div>

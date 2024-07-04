@@ -16,7 +16,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import HeaderSteps from '../HeaderSteps';
-import { Employee } from '../../models/EmployeeModel';
+// import { Employee } from '../../models/EmployeeModel';
 // import { Employee } from '../../models/EmployeeModel';
 // import { faL } from '@fortawesome/free-solid-svg-icons';
 // import { Employee } from '../../models/EmployeeModel';
@@ -179,7 +179,7 @@ const FormPage = () => {
                 ifscCode: Yup.string()
                 .required("IFSC Code is Required"),
                 aadhaarNumber: Yup.string()
-                .length(10,"Aadharcard Number should be of 12 digits")
+                .length(12,"Aadharcard Number should be of 12 digits")
                 .required("Aadhaar Number is Required"),
                 panNumber: Yup.string()
                 .required("PAN Number is Required"),
@@ -292,6 +292,7 @@ const FormPage = () => {
             formik.setFieldTouched('currentOrganizationDetail.currentCTC', true);
         }else if(type==="next" && currentPage==="education"){
             formik.values.educationDetails.forEach((educationDetail:any, index:number) => {
+                console.log(educationDetail)
                 formik.setFieldTouched(`educationDetails[${index}].educationName`, true);
                 formik.setFieldTouched(`educationDetails[${index}].universityName`, true);
                 formik.setFieldTouched(`educationDetails[${index}].result`, true);
@@ -299,6 +300,7 @@ const FormPage = () => {
             });
         }else if(type==="next" && currentPage==="experience"){
             formik.values.experienceDetails.forEach((experienceDetail:any, index:number) => {
+                console.log(experienceDetail)
                 formik.setFieldTouched(`experienceDetails[${index}].companyName`, true);
                 formik.setFieldTouched(`experienceDetails[${index}].position`, true);
                 formik.setFieldTouched(`experienceDetails[${index}].totalYear`, true);

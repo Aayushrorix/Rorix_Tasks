@@ -5,7 +5,7 @@ import {  useState } from 'react'
 
 function EducationDetail({formik}:any) {
 
-  const [index, setIndex] = useState(formik.values.educationDetails.length - 1)
+  // const [index, setIndex] = useState(formik.values.educationDetails.length - 1)
   const [editMode, setEditMode] = useState(false)
   const [editIds, setEditIds] = useState<Array<number>>([])
 
@@ -38,12 +38,12 @@ function EducationDetail({formik}:any) {
     const edu_details = formik.values.educationDetails
     edu_details.pop()
     const new_edu_details = edu_details
-    setIndex(-1)
+    // setIndex(-1)
     formik.setFieldValue('educationDetails', new_edu_details);
   }
 
   function add_edu(){
-    setIndex(formik.values.educationDetails.length)
+    // setIndex(formik.values.educationDetails.length)
     console.log("Index Array -> ",formik.values.educationDetails.length)
     setEditIds([...editIds,formik.values.educationDetails.length])
     console.log("Index Array -> ",editIds)
@@ -58,7 +58,7 @@ function EducationDetail({formik}:any) {
   function delete_record(index:number){
     let old_eduDetails = JSON.parse(JSON.stringify(formik.values.educationDetails))
     old_eduDetails.splice(index,1)
-    setIndex(-1)
+    // setIndex(-1)
     setEditMode(false)
     formik.setFieldValue('educationDetails', old_eduDetails);
   }
@@ -66,7 +66,7 @@ function EducationDetail({formik}:any) {
   function form_record_edit(index:number){
     setEditIds([...editIds,index])
     setEditMode(true)
-    setIndex(index)
+    // setIndex(index)
   }
 
   return (
