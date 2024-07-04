@@ -21,6 +21,7 @@ function Home() {
     const [loading, setLoading] = useState(false)
     const [empPages, setEmpPages] = useState<any>([])
     const [currentPage, setCurrentPage] = useState(1);
+    const [perPageEmployee, setPerPageEmployee] = useState(5)
 
     const [currentSorting, setCurrentSorting] = useState({cp:'',current:'',arrow:'n'})
 
@@ -68,9 +69,9 @@ function Home() {
 
     useEffect(()=>{
         // console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n',newEmpArray)
-        const sArray = chunkArray(newEmpArray,5)
+        const sArray = chunkArray(newEmpArray,perPageEmployee)
         setEmpPages(sArray)
-    },[newEmpArray])
+    },[newEmpArray,perPageEmployee])
 
     // console.log("-MMMMM> >>>>>>",empPages[0])
 
@@ -84,12 +85,21 @@ function Home() {
         setCurrentSorting({cp:'',current:'',arrow:'n'})
     }
 
+    useEffect(()=>{
+        setCurrentPage(1)
+    },[perPageEmployee])
+
     const handlePageChange = (event:any) => {
         const newPage = parseInt(event.target.value);
         setCurrentPage(newPage);
         // Perform any action you need when page changes, e.g., fetching data.
         // console.log('Selected Page:', newPage);
     };
+
+    const handlePerPageEmployee = (event:any) => {
+        const newPerPage = parseInt(event.target.value);
+        setPerPageEmployee(newPerPage)
+    }
 
     function sortList(arr: any[], uemt: string | undefined = undefined, emt: string | undefined = undefined) {
         // Make a copy of the array using slice()
@@ -267,9 +277,9 @@ function Home() {
                         }
 
 
-                        {!loading && empPages[currentPage-1] && empPages[currentPage-1].map((emp:Employee)=>(
+                        {!loading && empPages[currentPage-1] && empPages[currentPage-1].map((emp:Employee,index:number)=>(
                             <tr key={emp.id} className='mat-row'>
-                                <td className='mat-cell'>{emp.personalDetail.firstName}</td>
+                                <td className='mat-cell'>{((currentPage-1)*perPageEmployee)+index+1}</td>
                                 <td className='mat-cell'>{emp.personalDetail.firstName}</td>
                                 <td className='mat-cell'>{emp.professionalDetail.department}</td>
                                 <td className='mat-cell'>{emp.professionalDetail.designation}</td>
@@ -285,11 +295,19 @@ function Home() {
                         ))}
                         
                         <tr className='mat-row'>
-                            <td className='mat-cell' colSpan={8}>Page &nbsp;
+                            <td className='mat-cell' colSpan={8}>
+                                Page &nbsp;
                                 <select name="page" id="page" onChange={handlePageChange} value={currentPage}>
                                     {Object.keys(empPages).map((k)=>(
                                         <option key={k}  value={Number(k)+1}>{Number(k)+1}</option>
                                     ))}
+                                </select>
+                                &nbsp;&nbsp;&nbsp; Employees Per Page &nbsp;
+                                <select name="page" id="page" onChange={handlePerPageEmployee} value={perPageEmployee}>
+                                    <option key={5}  value={5}>5</option>
+                                    <option key={10}  value={10}>10</option>
+                                    <option key={15}  value={15}>15</option>
+                                    <option key={20}  value={20}>20</option>
                                 </select>
                             </td>
                         </tr>
