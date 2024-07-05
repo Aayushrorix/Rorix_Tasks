@@ -1,0 +1,72 @@
+.div-main{
+    text-align: center;
+    font-family: Roboto, Helvetica Neue, sans-serif;
+}
+
+.div-container{
+    margin: 20px 200px;
+    box-shadow: 0 2px 1px -1px #0003, 0 1px 1px #00000024, 0 1px 3px #0000001f;
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    position: relative;
+    padding: 16px;
+    border-radius: 4px;
+    /* margin: 3rem !important; */
+    /* width: 50% !important; */
+    overflow:auto;
+}
+
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+}
+
+.grid-item{
+    padding: 20px;
+    background-color: #e5e5e580;
+    text-align: center;
+    height: 50px;
+    /* line-height: 50px; */
+}
+
+.item-selected{
+    padding: 20px;
+    background-color: green;
+}
+
+.item-unselected{
+    padding: 20px;
+    background-color: white;
+}
+
+.btn{
+    background-color: #673ab7;
+    color:white;
+    margin: .5rem;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 2px #d4cece;
+    border: none;
+}
+
+.btn:visited{
+    background-color: #afa7bf;
+    color:white;
+    margin: .5rem;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 15px 25px;
+    border-radius: 15px;
+    box-shadow: 0 2px #d4cece;
+    border: none;
+}
+
+.win-message{
+    /* text-align: center; */
+    color: red;
+    font-weight: 500;
+}
