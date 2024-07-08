@@ -8,7 +8,7 @@ function Tic_Tac_Toe() {
   const [win, setWin] = useState<number|string>('n')
   
   useEffect(()=>{
-    console.log(win)
+    checkWin()
   },[win,tableItems])
 
   function checkWin(){
@@ -68,15 +68,18 @@ function Tic_Tac_Toe() {
       <div className='div-container'>
           <h2>Tic_Tac_Toe</h2>
 
+          <h3>{turn}'s Turn</h3>
+
           <div className='grid-container'>
 
             {tableItems.map((e,index)=>(
               <div key={index} className='grid-item' onClick={() => (win=='n'?handleOnClick(index):'')}>{e!==0?e:''}</div>
             ))}
 
-            {win!=='n' && <div> Congratulations {win} Won!</div>}
            
           </div>
+            {win!=='n' && <h2 className='win-message'> Congratulations {win} Won!</h2>}
+            {win=='n' && !tableItems.includes(0) && <h2 className='win-message'> Match Tie!</h2>}
           
       </div>
 
