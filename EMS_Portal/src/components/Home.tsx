@@ -1,25 +1,19 @@
-// import React from 'react'
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom'
-import './Home.css'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './css/Home.css'
 import { useSelector } from 'react-redux';
 import { RootState } from '../store/store';
 import { Employee } from '../models/EmployeeModel';
 import { useGetEmployeesQuery, useDeleteEmployeeMutation } from '../slices/EmployeeSlice';
 import { useEffect, useState } from 'react';
-// import { number } from 'yup';
-// import { faL } from '@fortawesome/free-solid-svg-icons';
-// import { number } from 'yup';
-// import { useEffect } from 'react';
-
 
 function Home() {
     const nevigate = useNavigate()
 
-    const [deleteEmployee] = useDeleteEmployeeMutation()
+    const [deleteEmployee, { isLoading: deleteEmployeeLoading }] = useDeleteEmployeeMutation();
 
     const [loading, setLoading] = useState(false)
-    const [empPages, setEmpPages] = useState<any>([])
+    const [empPages, setEmpPages] = useState<Employee[][]>([])
     const [currentPage, setCurrentPage] = useState(1);
     const [perPageEmployee, setPerPageEmployee] = useState(5)
 
@@ -35,13 +29,14 @@ function Home() {
         data?: ApiResponse;
     }
 
-    const {isLoading } = useGetEmployeesQuery()
+    const { isLoading: getEmployeesLoading } = useGetEmployeesQuery();
     useEffect(()=>{
-        setLoading(isLoading)
-    },[isLoading])
+        setLoading(getEmployeesLoading)
+    },[getEmployeesLoading])
 
-    // console.log("data -> ",data)
-    // console.log("isLoading -> ",isLoading)
+    useEffect(()=>{
+        setLoading(deleteEmployeeLoading)
+    },[deleteEmployeeLoading])
 
     const allEmployees = useSelector((state:RootState) => {
         const queries = Object.values(state.api.queries) as QueryState[];
@@ -53,9 +48,7 @@ function Home() {
         setNewEmpArray(allEmployees)
     },[allEmployees])
 
-    // const allEmployees = sortList(nallEmployees,currentSorting.cp,currentSorting.current)
-
-    function chunkArray(arr:any, chunkSize:number) {
+    function chunkArray(arr:Employee[], chunkSize:number) {
         var chunks = [];
         for (var i = 0; i < arr.length; i += chunkSize) {
             chunks.push(arr.slice(i, i + chunkSize));
@@ -63,22 +56,15 @@ function Home() {
         return chunks;
     }
 
-    // useEffect(()=>{
-    //     console.log(" =>>>>>>>>>>>>>>\n\n\n\n\n\n\n\n\n\n",newEmpArray)
-    // },[empPages])
-
     useEffect(()=>{
-        // console.log('\n\n\n\n\n\n\n\n\n\n\n\n\n',newEmpArray)
         const sArray = chunkArray(newEmpArray,perPageEmployee)
         setEmpPages(sArray)
     },[newEmpArray,perPageEmployee])
 
-    // console.log("-MMMMM> >>>>>>",empPages[0])
-
     function deleteRecord(id:string){
-        setTimeout(()=>{
-            setLoading(false)    
-        },500)
+        // setTimeout(()=>{
+        //     setLoading(false)    
+        // },500)
         setLoading(true)
         deleteEmployee(id)
         setCurrentPage(1)
@@ -89,20 +75,17 @@ function Home() {
         setCurrentPage(1)
     },[perPageEmployee])
 
-    const handlePageChange = (event:any) => {
+    const handlePageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newPage = parseInt(event.target.value);
         setCurrentPage(newPage);
-        // Perform any action you need when page changes, e.g., fetching data.
-        // console.log('Selected Page:', newPage);
     };
 
-    const handlePerPageEmployee = (event:any) => {
+    const handlePerPageEmployee = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const newPerPage = parseInt(event.target.value);
         setPerPageEmployee(newPerPage)
     }
 
-    function sortList(arr: any[], uemt: string | undefined = undefined, emt: string | undefined = undefined) {
-        // Make a copy of the array using slice()
+    function sortList(arr: Employee[], uemt: string | undefined = undefined, emt: string | undefined = undefined) {
         const sortedArr = arr.slice();
     
         if (uemt && emt) {
@@ -129,12 +112,10 @@ function Home() {
             });
         }
     
-        // console.log("Sorted Array ====> ", sortedArr);
         return sortedArr;
     }
 
     useEffect(()=>{
-        // console.log("New ---> currentSorting ===> ",currentSorting)
         if(currentSorting.arrow==="n"){
             setNewEmpArray(allEmployees)
         }
@@ -149,9 +130,7 @@ function Home() {
         }
     },[currentSorting])
 
-    function handleSorting(parentCurr:any,currBtn:any){
-        // console.log("currBtn ===> ",currBtn)
-        // console.log("currentSorting ===> ",currentSorting)
+    function handleSorting(parentCurr:string,currBtn:string){
         if(currentSorting.current===currBtn){
             if(currentSorting.arrow==='n'){
                 setCurrentSorting({cp:parentCurr,current:currBtn,arrow:'u'})
@@ -167,8 +146,6 @@ function Home() {
             setCurrentSorting({cp:parentCurr,current:currBtn,arrow:'u'})
         }
     }
-
-    // console.log("All Employees -> ",allEmployees)
 
     return (
         <div>
@@ -287,7 +264,6 @@ function Home() {
                                 <td className='mat-cell'>{emp.personalDetail.mobileNumber}</td>
                                 <td className='mat-cell'>{emp.id}</td>
                                 <td className='mat-cell'>
-                                    {/* <button type='button' onClick={() => editRecord(emp)}>Edit</button> */}
                                     <Link to={`/edit-employee/${emp.id}`} ><button className='btn-edit-employee'>Edit</button></Link>
                                     <button className='btn-delete-employee' type='button' onClick={()=>deleteRecord(emp.id)}>Delete</button>
                                 </td>
@@ -302,13 +278,14 @@ function Home() {
                                         <option key={k}  value={Number(k)+1}>{Number(k)+1}</option>
                                     ))}
                                 </select>
-                                &nbsp;&nbsp;&nbsp; Employees Per Page &nbsp;
-                                <select name="page" id="page" onChange={handlePerPageEmployee} value={perPageEmployee}>
+                                &nbsp;&nbsp;|&nbsp; Employees Per Page &nbsp;
+                                <select name="page" id="page1" onChange={handlePerPageEmployee} value={perPageEmployee}>
                                     <option key={5}  value={5}>5</option>
                                     <option key={10}  value={10}>10</option>
                                     <option key={15}  value={15}>15</option>
                                     <option key={20}  value={20}>20</option>
                                 </select>
+                                &nbsp;&nbsp;|&nbsp; Total No. of Employees : {allEmployees.length} &nbsp;
                             </td>
                         </tr>
                     </tbody>

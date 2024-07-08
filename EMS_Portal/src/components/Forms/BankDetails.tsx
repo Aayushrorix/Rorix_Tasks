@@ -1,6 +1,3 @@
-// import React from 'react'
-// import FormPage from "./FormPage"
-
 function BankDetails({formik}:any) {
   return (
     <div>

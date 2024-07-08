@@ -1,44 +1,45 @@
+
 export interface Image{
-    fileName: String;
-    fileSrc: String;
+    fileName: string;
+    fileSrc: string;
 }
 
 export interface PersonalDetail{
-    firstName: String;
-    middleName: String;
-    lastName: String;
-    email: String;
-    mobileNumber: String;
-    dob: Date;
-    image : Image;
-    presentAddress: String;
-    permanentAddress: String;
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    email: string;
+    mobileNumber: string;
+    dob: Date | string;
+    // image : Image;
+    presentAddress: string;
+    permanentAddress: string;
     copyAddress: Boolean;
 }
 
 export interface BankDetails{
-    bankName: String;
-    accountName: String;
-    accountNumber: String;
-    ifscCode: String;
-    aadhaarNumber: String;
-    panNumber: String;
+    bankName: string;
+    accountName: string;
+    accountNumber: string;
+    ifscCode: string;
+    aadhaarNumber: string;
+    panNumber: string;
 }
 
 
 export interface ResumeFile{
-    fileName: String;
+    fileName: string;
     fileSrc: Object;
 }
 
 export interface ProfessionalDetail{
-    designation: String;
-    department: String;
-    years: String;
-    months: String;
-    currentLocation: String;
+    designation: string;
+    department: string;
+    years: string;
+    months: string;
+    currentLocation: string;
     skills: Object;
-    resumeFile: ResumeFile;
+    // resumeFile: ResumeFile;
 }
 
 
@@ -63,9 +64,9 @@ export type ExperienceArray = ExperienceInfo[];
 
 
 export interface CurrentOrganizationDetail{
-    appraisalDate: Date;
-    currentCTC: String;
-    joiningDate: Date;
+    appraisalDate: Date | string;
+    currentCTC: string;
+    joiningDate: Date | string;
 }
 
 export interface Employee{
@@ -77,3 +78,4 @@ export interface Employee{
     experienceDetails: ExperienceArray;
     professionalDetail: ProfessionalDetail;
 }
+

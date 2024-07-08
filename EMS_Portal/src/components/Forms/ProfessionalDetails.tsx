@@ -1,5 +1,4 @@
-// import React from 'react'
-import './FormPage.css'
+import '../css/FormPage.css'
 
 function ProfessionalDetails({formik}:any) {
   return (
@@ -71,8 +70,6 @@ function ProfessionalDetails({formik}:any) {
                     <div className='div-field-second'>
                         <div className='div-field-third'>
                             <div className='div-field'>
-                                {/* <input type='text' className='input-field' name='professionalDetail.years' value={formik.values.professionalDetail.years} onChange={formik.handleChange} onBlur={formik.handleBlur}/> */}
-
                                 <select
                                     className='input-field'
                                     name='professionalDetail.years'
@@ -121,13 +118,6 @@ function ProfessionalDetails({formik}:any) {
                     <div className='div-field-second'>
                         <div className='div-field-third'>
                             <div className='div-field'>
-                                {/* <input type='text' className='input-field' name='professionalDetail.months' value={formik.values.professionalDetail.months} onChange={formik.handleChange} onBlur={formik.handleBlur}/>
-                                <span className='field-label-wrapper'>
-                                    <label className='form-field-label'>
-                                        <span>Months</span>
-                                        <span>*</span>
-                                    </label>
-                                </span> */}
                                 <select
                                     className='input-field'
                                     name='professionalDetail.months'

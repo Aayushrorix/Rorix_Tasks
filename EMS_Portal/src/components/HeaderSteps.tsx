@@ -1,7 +1,11 @@
-// import React from 'react'
-import './HeaderSteps.css'
+import './css/HeaderSteps.css'
 
-function HeaderSteps({completeForm}:any,{currentPage}:any) {
+interface HeaderStepsProps {
+    completeForm: string[];
+    currentPage: string;
+}
+
+function HeaderSteps({ completeForm, currentPage }: HeaderStepsProps) {
   return (
     <div>
 

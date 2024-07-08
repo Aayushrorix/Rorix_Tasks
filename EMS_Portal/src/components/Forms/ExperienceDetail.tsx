@@ -1,12 +1,11 @@
-// import React from 'react'
-import './FormPage.css'
-import './ExperienceDetail.css'
-import '../Home.css'
+import '/src/components/css/FormPage.css'
+import '/src/components/css/ExperienceDetail.css'
+import '/src/components/css/Home.css'
 import { useState } from 'react'
+import { ExperienceInfo } from '../../models/EmployeeModel'
 
 function ExperienceDetail({formik}:any) {
 
-  // const [index, setIndex] = useState(formik.values.experienceDetails.length - 1)
   const [editMode, setEditMode] = useState(false)
   const [editIds, setEditIds] = useState<Array<number>>([])
 
@@ -38,13 +37,11 @@ function ExperienceDetail({formik}:any) {
     setEditMode(false)
     const exp_details = formik.values.experienceDetails
     exp_details.pop()
-    // setIndex(-1)
     const new_exp_details = exp_details
     formik.setFieldValue('experienceDetails', new_exp_details);
   }
 
   function add_exp(){
-    // setIndex(formik.values.experienceDetails.length)
     setEditIds([...editIds,formik.values.experienceDetails.length])
     setEditMode(true)
 
@@ -57,7 +54,6 @@ function ExperienceDetail({formik}:any) {
   function delete_record(index:number){
     let old_expDetails = JSON.parse(JSON.stringify(formik.values.experienceDetails))
     old_expDetails.splice(index,1)
-    // setIndex(-1)
     setEditMode(false)
     formik.setFieldValue('experienceDetails', old_expDetails);
   }
@@ -65,7 +61,6 @@ function ExperienceDetail({formik}:any) {
   function form_record_edit(index:number){
     setEditIds([...editIds,index])
     setEditMode(true)
-    // setIndex(index)
   }
 
 
@@ -96,9 +91,9 @@ function ExperienceDetail({formik}:any) {
               }
 
               {formik.values.experienceDetails &&
-                formik.values.experienceDetails.map((exp:any,index:any) => (
+                formik.values.experienceDetails.map((exp:ExperienceInfo,index:number) => (
                     <>
-                      {!editIds.includes(index) && <tr className='mat-row' id={index}>
+                      {!editIds.includes(index) && <tr className='mat-row' id={String(index)}>
                         <td className='mat-cell'>{exp.companyName}</td>
                         <td className='mat-cell'>{exp.position}</td>
                         <td className='mat-cell'>{exp.totalYear}</td>
@@ -109,7 +104,7 @@ function ExperienceDetail({formik}:any) {
                         </td>
                       </tr>}
 
-                      {editIds.includes(index) && <tr className='mat-row' id={index}>
+                      {editIds.includes(index) && <tr className='mat-row' id={String(index)}>
 
                         <td className='mat-cell'>
                           <div className='form-field'>

@@ -1,19 +1,6 @@
-// import React from 'react'
-// import { useState } from 'react'
-import './FormPage.css'
-// import { PersonalDetail } from '../../models/EmployeeModel'
+import '../css/FormPage.css'
 
 function PersonalDetails({formik}:any) {
-    // const [personalDetail, setPersonalDetail] = useState<PersonalDetail>(Object)
-
-    // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     // [e.target.name] = e.target.value
-    //     // console.log("====> ",e.target.name,"==>",e.target.value)
-    //     setPersonalDetail({...personalDetail, [e.target.name]: e.target.value })
-    //     console.log("personalDetail -> ",personalDetail)
-    // };
-
-    console.log("\n\n\n DDDDD ==> ",formik.values.personalDetail.dob)
   return (
     <div>
         <h2 className="form-heading" >Personal Details</h2>
@@ -30,10 +17,6 @@ function PersonalDetails({formik}:any) {
                                     <span>*</span>
                                 </label>
                             </span>
-                            {/* {formik.touched.personalDetail.firstName && formik.errors.personalDetail.firstName && <p style={{color:"red"}}>{formik.errors.personalDetail.firstName}</p>} */}
-                            {/* {formik.touched.personalDetail?.firstName && formik.errors.personalDetail?.firstName ? (
-                                <div style={{color:"red"}}>{formik.errors.personalDetail.firstName}</div>
-                            ) : null} */}
                         </div>
                     </div>
                     <div className='form-field-underline'>
@@ -257,7 +240,6 @@ function PersonalDetails({formik}:any) {
                             <span className='field-label-wrapper'>
                                 <label>
                                     <span>Copy to Permanent Address</span>
-                                    {/* <span>*</span> */}
                                 </label>
                             </span>
                         </div>

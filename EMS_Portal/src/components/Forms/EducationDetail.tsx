@@ -1,11 +1,11 @@
-import './FormPage.css'
-import './EducationDetail.css'
-import '../Home.css'
+import '/src/components/css/FormPage.css'
+import '/src/components/css/EducationDetail.css'
+import '/src/components/css/Home.css'
 import {  useState } from 'react'
+import { EducationInfo } from '../../models/EmployeeModel'
 
 function EducationDetail({formik}:any) {
-
-  // const [index, setIndex] = useState(formik.values.educationDetails.length - 1)
+  
   const [editMode, setEditMode] = useState(false)
   const [editIds, setEditIds] = useState<Array<number>>([])
 
@@ -38,12 +38,10 @@ function EducationDetail({formik}:any) {
     const edu_details = formik.values.educationDetails
     edu_details.pop()
     const new_edu_details = edu_details
-    // setIndex(-1)
     formik.setFieldValue('educationDetails', new_edu_details);
   }
 
   function add_edu(){
-    // setIndex(formik.values.educationDetails.length)
     console.log("Index Array -> ",formik.values.educationDetails.length)
     setEditIds([...editIds,formik.values.educationDetails.length])
     console.log("Index Array -> ",editIds)
@@ -58,7 +56,6 @@ function EducationDetail({formik}:any) {
   function delete_record(index:number){
     let old_eduDetails = JSON.parse(JSON.stringify(formik.values.educationDetails))
     old_eduDetails.splice(index,1)
-    // setIndex(-1)
     setEditMode(false)
     formik.setFieldValue('educationDetails', old_eduDetails);
   }
@@ -66,7 +63,6 @@ function EducationDetail({formik}:any) {
   function form_record_edit(index:number){
     setEditIds([...editIds,index])
     setEditMode(true)
-    // setIndex(index)
   }
 
   return (
@@ -98,9 +94,9 @@ function EducationDetail({formik}:any) {
               }
 
               {formik.values.educationDetails &&
-                formik.values.educationDetails.map((edu:any,index:any) => (
+                formik.values.educationDetails.map((edu:EducationInfo,index:number) => (
                   <>
-                    {!editIds.includes(index) && <tr className='mat-row' id={index}>
+                    {!editIds.includes(index) && <tr className='mat-row' id={String(index)}>
                       <td className='mat-cell'>{edu.educationName}</td>
                       <td className='mat-cell'>{edu.universityName}</td>
                       <td className='mat-cell'>{edu.result}</td>
@@ -112,7 +108,7 @@ function EducationDetail({formik}:any) {
                     </tr>}
 
 
-                    {editIds.includes(index) && <tr className='mat-row' id={index}>
+                    {editIds.includes(index) && <tr className='mat-row' id={String(index)}>
 
                     <td className='mat-cell'>
                       <div className='form-field'>

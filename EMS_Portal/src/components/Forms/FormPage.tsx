@@ -1,5 +1,5 @@
 import  { useEffect, useState } from 'react';
-import './FormPage.css';
+import '../css/FormPage.css';
 import PersonalDetails from './PersonalDetails';
 import BankDetails from './BankDetails';
 import ProfessionalDetails from './ProfessionalDetails';
@@ -8,7 +8,6 @@ import ExperienceDetail from './ExperienceDetail';
 import CurrentOrganizationDetail from './CurrentOrganizationDetail';
 import { useNavigate, useParams } from 'react-router-dom'
 import {  useAddEmployeeMutation , useUpdateEmployeeMutation} from '../../slices/EmployeeSlice';
-// import { Employee } from '../../models/EmployeeModel';
 
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -16,33 +15,37 @@ import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../../store/store';
 import { useSelector } from 'react-redux';
 import HeaderSteps from '../HeaderSteps';
-// import { Employee } from '../../models/EmployeeModel';
-// import { Employee } from '../../models/EmployeeModel';
-// import { faL } from '@fortawesome/free-solid-svg-icons';
-// import { Employee } from '../../models/EmployeeModel';
+import { Employee } from '../../models/EmployeeModel';
 
 const FormPage = () => {
-
-    const [addEmployee] = useAddEmployeeMutation()
-    const [updateEmployee] = useUpdateEmployeeMutation()
+    
+    const [loading, setLoading] = useState(false); 
+    const [addEmployee, { isLoading: addEmployeeLoading }] = useAddEmployeeMutation();
+    const [updateEmployee, { isLoading: updateEmployeeLoading }] = useUpdateEmployeeMutation();
     const [editMode, setEditMode] = useState(false)
     const [completeForm, setCompleteForm] = useState<string[]>([])
 
+    useEffect(()=>{
+        setLoading(addEmployeeLoading)
+    },[addEmployeeLoading])
+
+    useEffect(()=>{
+        setLoading(updateEmployeeLoading)
+    },[updateEmployeeLoading])
+
     interface ApiResponse{
-        employees?: any[]
+        employees?: Employee[]
     }
     
 
     interface QueryState {
         data?:ApiResponse;
-        // other properties depending on your RTK Query setup
       }
 
     
     const {id} = useParams();
-    // const [empID, setEmpId] = useState(id?id:uuidv4())
     const empID = id?id:uuidv4()
-    const [initialValue, setInitialValue] = useState(
+    const [initialValue, setInitialValue] = useState<Employee>(
         {
         id:empID,
         personalDetail: {
@@ -71,38 +74,14 @@ const FormPage = () => {
             months: "",
             currentLocation: "",
             skills: "",
-            resumeFile: {
-                fileName: "TEMP-PDF-Document.pdf",
-                fileSrc: {}
-            },
+            // resumeFile: {
+            //     fileName: "TEMP-PDF-Document.pdf",
+            //     fileSrc: {}
+            // },
         },
         educationDetails: [
-            // {
-            //     educationName: "aaa",
-            //     universityName: "",
-            //     result: "",
-            //     yearOfPassing: ""
-            // },
-            // {
-            //     educationName: "",
-            //     universityName: "",
-            //     result: "",
-            //     yearOfPassing: ""
-            // }
         ],
         experienceDetails: [
-            // {
-            //     companyName: "",
-            //     position: "",
-            //     totalYear: "",
-            //     lastCTC: ""
-            // },
-            // {
-            //     companyName: "",
-            //     position: "",
-            //     totalYear: "",
-            //     lastCTC: ""
-            // }
         ],
         currentOrganizationDetail:{
             joiningDate: "",
@@ -112,28 +91,18 @@ const FormPage = () => {
     })
     useEffect(() => {
         if (id) {
-            setEditMode(true); // Set editMode to true when id exists
-            // setEmpId(id)
+            setEditMode(true);
         } else {
-            setEditMode(false); // Set editMode to false when id does not exist
-            // setEmpId(uuidv4())
+            setEditMode(false);
         }
     }, [id]);
-
-    // console.log("MODE ..........->",editMode)
-    // console.log("ID ..........->",empID)
 
     const allEmployees = useSelector((state:RootState) => {
         const queries = Object.values(state.api.queries) as QueryState[];
         return queries.length > 0 && queries[0].data?.employees ? queries[0].data.employees : [];
     });
     
-    const currEmployee = allEmployees.find(emp => emp.id == id);
-    // console.log("Current EMP -> ",currEmployee)
-
-    // if(currEmployee){
-    //     setInitialValue(currEmployee)
-    // }
+    const currEmployee:Employee | undefined = allEmployees.find(emp => emp.id == id);
 
     useEffect(() => {
         if (currEmployee) {
@@ -142,9 +111,7 @@ const FormPage = () => {
         }
     }, [currEmployee]);
 
-    // console.log("Initial ----> ",initialValue)
-
-    const formik = useFormik({
+    const formik:any = useFormik({
         initialValues: initialValue,
         validationSchema:Yup.object({
             personalDetail:Yup.object({
@@ -209,16 +176,6 @@ const FormPage = () => {
                 currentCTC: Yup.string()
                 .required("Current CTC is Required"),
             }),
-            // EducationDetail:Yup.object({
-            //     educationName: Yup.string()
-            //     .required("Education Name is Required"),
-            //     universityName: Yup.string()
-            //     .required("University Name is Required"),
-            //     result: Yup.string()
-            //     .required("Result Name is Required"),
-            //     yearOfPassing: Yup.string()
-            //     .required("year Of Passing Name is Required")
-            // })
             educationDetails: Yup.array()
             .of(Yup.object().shape({
                     educationName: Yup.string()
@@ -244,15 +201,10 @@ const FormPage = () => {
                 })
             ),
         }) ,
-        onSubmit: (values:any, { resetForm }) => {
-            // console.log("values -->",values)
-            // Reset the form after submission
+        onSubmit: (values:Employee, { resetForm }) => {
             addEmployee(values)
             resetForm();
             nevigate('/')
-      
-            // console.log("Form Submitted", values);
-      
           }
         
     })
@@ -274,7 +226,6 @@ const FormPage = () => {
             formik.setFieldTouched('personalDetail.dob', true);
             formik.setFieldTouched('personalDetail.presentAddress', true);
             formik.setFieldTouched('personalDetail.permanentAddress', true);
-            // formik.setFieldTouched('personalDetail.copyAddress', true);
         }else if(type==="next" && currentPage==="bank"){
             formik.setFieldTouched('bankDetail.bankName', true);
             formik.setFieldTouched('bankDetail.accountName', true);
@@ -292,16 +243,16 @@ const FormPage = () => {
         }else if(type==="next" && currentPage==="currentOrganization"){
             formik.setFieldTouched('currentOrganizationDetail.currentCTC', true);
         }else if(type==="next" && currentPage==="education"){
-            formik.values.educationDetails.forEach((educationDetail:any, index:number) => {
-                console.log(educationDetail)
+            formik.values.educationDetails.forEach((_:null, index:number) => {
+                // console.log(educationDetail)
                 formik.setFieldTouched(`educationDetails[${index}].educationName`, true);
                 formik.setFieldTouched(`educationDetails[${index}].universityName`, true);
                 formik.setFieldTouched(`educationDetails[${index}].result`, true);
                 formik.setFieldTouched(`educationDetails[${index}].yearOfPassing`, true);
             });
         }else if(type==="next" && currentPage==="experience"){
-            formik.values.experienceDetails.forEach((experienceDetail:any, index:number) => {
-                console.log(experienceDetail)
+            formik.values.experienceDetails.forEach((_:null, index:number) => {
+                // console.log(experienceDetail)
                 formik.setFieldTouched(`experienceDetails[${index}].companyName`, true);
                 formik.setFieldTouched(`experienceDetails[${index}].position`, true);
                 formik.setFieldTouched(`experienceDetails[${index}].totalYear`, true);
@@ -309,8 +260,6 @@ const FormPage = () => {
             });
         }
 
-        
-        
         if( (type==="next" && currentPage==="personal" &&formik.touched.personalDetail && !formik.errors.personalDetail) ||
             (type==="next" && currentPage==="bank" &&formik.touched.bankDetail && !formik.errors.bankDetail) ||
             (type==="next" && currentPage==="professional" &&formik.touched.professionalDetail && !formik.errors.professionalDetail) ||
@@ -323,7 +272,6 @@ const FormPage = () => {
             console.log("CURR PAGE => ",currentPage, page)
             setCompleteForm([...completeForm,currentPage])
 
-            // Update previousPage and nextPage based on currentPage
             switch (page) {
                 case 'personal':
                     setPreviousPage('');
@@ -358,7 +306,6 @@ const FormPage = () => {
             setCurrentPage(page);
             console.log("CURR PAGE => ",currentPage, page)
 
-            // Update previousPage and nextPage based on currentPage
             switch (page) {
                 case 'personal':
                     setPreviousPage('');
@@ -390,7 +337,7 @@ const FormPage = () => {
         }
     };
 
-    function onEditSave(emp:any){
+    function onEditSave(emp:Employee){
         formik.setFieldTouched('currentOrganizationDetail.joiningDate', true);
         formik.setFieldTouched('currentOrganizationDetail.appraisalDate', true);
         formik.setFieldTouched('currentOrganizationDetail.currentCTC', true);
@@ -406,7 +353,9 @@ const FormPage = () => {
         <>
         <HeaderSteps completeForm={completeForm} currentPage={currentPage}/>
         <div className="div-form-main">
-            <form onSubmit={formik.handleSubmit}>
+            {loading && (<img className="img-loader" src="public\ripples.svg" alt="Loading..." />)}
+
+            {!loading && <form onSubmit={formik.handleSubmit}>
                 {currentPage === 'personal' && <PersonalDetails formik={formik}/>}
                 {currentPage === 'bank' && <BankDetails formik={formik}/>}
                 {currentPage === 'professional' && <ProfessionalDetails formik={formik}/>}
@@ -429,7 +378,6 @@ const FormPage = () => {
                             }
                             {currentPage !== 'currentOrganization' && 
                                 <button onClick={() => changePage(nextPage,"next")} className='raised-button btn-primary' type="button">
-                                    {/* {currentPage === 'currentOrganization' ? 'Submit' : 'Next'} */}
                                     Next
                                 </button>
                             }
@@ -446,7 +394,7 @@ const FormPage = () => {
                         </span>
                     </div>
                 </div>
-            </form>
+            </form>}
         </div>
         </>
     );

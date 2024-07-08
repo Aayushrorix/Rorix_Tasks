@@ -1,5 +1,3 @@
-// import React from 'react'
-
 function CurrentOrganizationDetail({formik}:any) {
   return (
     <div>
