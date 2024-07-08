@@ -1,0 +1,23 @@
+div{
+    text-align: center;
+
+}
+
+button{
+    margin: 20px;
+}
+
+.div-container{
+    margin: 20px;
+}
+
+span{
+    margin: 50px;
+    text-align: center;
+    align-items: center;
+}
+
+.show-total{
+    align-items: center;
+    text-align: center;
+}
