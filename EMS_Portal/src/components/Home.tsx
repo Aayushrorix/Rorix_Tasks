@@ -30,13 +30,16 @@ function Home() {
     }
 
     const { isLoading: getEmployeesLoading } = useGetEmployeesQuery();
-    useEffect(()=>{
-        setLoading(getEmployeesLoading)
-    },[getEmployeesLoading])
 
     useEffect(()=>{
         setLoading(deleteEmployeeLoading)
     },[deleteEmployeeLoading])
+
+    useEffect(()=>{
+        setLoading(getEmployeesLoading)
+    },[getEmployeesLoading])
+
+    
 
     const allEmployees = useSelector((state:RootState) => {
         const queries = Object.values(state.api.queries) as QueryState[];
