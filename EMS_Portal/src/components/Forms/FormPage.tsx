@@ -20,18 +20,25 @@ import { Employee } from '../../models/EmployeeModel';
 const FormPage = () => {
     
     const [loading, setLoading] = useState(false); 
-    const [addEmployee, { isLoading: addEmployeeLoading }] = useAddEmployeeMutation();
-    const [updateEmployee, { isLoading: updateEmployeeLoading }] = useUpdateEmployeeMutation();
+    const [addEmployee, { isLoading: addEmployeeLoading, isSuccess:  addEmployeeSuccess}] = useAddEmployeeMutation();
+    const [updateEmployee, { isLoading: updateEmployeeLoading, isSuccess:  updateEmployeeSuccess }] = useUpdateEmployeeMutation();
     const [editMode, setEditMode] = useState(false)
     const [completeForm, setCompleteForm] = useState<string[]>([])
+    const nevigate = useNavigate()
 
     useEffect(()=>{
         setLoading(addEmployeeLoading)
-    },[addEmployeeLoading])
+        if(!addEmployeeLoading && addEmployeeSuccess){
+            nevigate('/')
+        }
+    },[addEmployeeLoading,addEmployeeSuccess])
 
     useEffect(()=>{
         setLoading(updateEmployeeLoading)
-    },[updateEmployeeLoading])
+        if(!updateEmployeeLoading &&updateEmployeeSuccess){
+            nevigate('/')
+        }
+    },[updateEmployeeLoading,updateEmployeeSuccess])
 
     interface ApiResponse{
         employees?: Employee[]
@@ -204,7 +211,7 @@ const FormPage = () => {
         onSubmit: (values:Employee, { resetForm }) => {
             addEmployee(values)
             resetForm();
-            nevigate('/')
+            // nevigate('/')
           }
         
     })
@@ -213,7 +220,7 @@ const FormPage = () => {
     const [nextPage, setNextPage] = useState<string>('bank');
     const [previousPage, setPreviousPage] = useState<string>('');
 
-    const nevigate = useNavigate()
+    
 
     const changePage = (page: string, type: string) => {
 
@@ -345,7 +352,6 @@ const FormPage = () => {
             console.log(emp)
             setEditMode(false)
             updateEmployee(emp)
-            nevigate('/')
         }
     }
 

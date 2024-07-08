@@ -12,7 +12,7 @@ export const employeeApi = createApi({
             query: () => '/get_employees',
             providesTags: ["Employee"],
         }),
-        addEmployee: builder.mutation<any, any>({
+        addEmployee: builder.mutation<Employee, Employee>({
             query: (employee) => ({
                 url: '/add_employee',
                 method: 'POST',
@@ -27,7 +27,7 @@ export const employeeApi = createApi({
             }),
             invalidatesTags: ["Employee"],
         }),
-        updateEmployee: builder.mutation<any,any>({
+        updateEmployee: builder.mutation<Employee,Employee>({
             query: (emp) => ({
                 url: `/update`,
                 method: 'PUT',
